@@ -13,13 +13,13 @@ async def set_starters(
             label="Notas mais recentes",
             message="Traga-me as 5 notas fiscais mais recentes",
             command="recent_invoices",
-            icon="/public/idea.svg",
+            icon="/public/clipboard-clock.svg",
         ),
         cl.Starter(
-            label="Notas por período",
-            message="Traga-me as notas fiscais emitidas entre 01/01/2023 e 31/12/2023",
+            label="Notas de um período de um ano",
+            message="Traga-me as notas fiscais emitidas em um perído de um ano",
             command="invoices_by_period",
-            icon="/public/calendar.svg",
+            icon="/public/calendars.svg",
         ),
     ]
 
