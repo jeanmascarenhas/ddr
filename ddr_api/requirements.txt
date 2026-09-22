@@ -6,5 +6,12 @@ langchain
 langchain-core
 langchain-google-genai
 
+# banco de dados
+sqlalchemy>=2.0
+psycopg[binary]
+
+# validação/normalização do SQL gerado
+sqlglot
+
 python-dotenv
 pydantic
