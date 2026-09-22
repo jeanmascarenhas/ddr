@@ -52,7 +52,7 @@ async def on_message(message: cl.Message):
 
             async with client.stream(
                 "POST",
-                f"{BACKEND_URL}/chat/fake",
+                f"{BACKEND_URL}/chat/stream",
                 json={"prompt": message.content},
             ) as response:
                 async for chunk in response.aiter_bytes():
