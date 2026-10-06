@@ -4,8 +4,6 @@ import os
 import chainlit as cl
 import httpx
 
-import starters.starters
-
 from auth.authentication import auth_callback
 
 BACKEND_URL = os.getenv(

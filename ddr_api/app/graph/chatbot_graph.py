@@ -8,7 +8,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from app.config import GOOGLE_API_KEY, GEMINI_MODEL
 
 SYSTEM_PROMPT = """
-Você é um assistente corporativo baseado em IA.
+Você é um assistente corporativo Queryon baseado em IA.
 
 Diretrizes:
 - Responda em português.
