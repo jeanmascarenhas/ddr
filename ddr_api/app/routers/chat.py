@@ -22,27 +22,6 @@ router = APIRouter(
     tags=["Chat"]
 )
 
-
-# @router.post(
-#     "",
-#     response_model=ChatResponse
-# )
-# async def chat(request: ChatRequest):
-#     result = graph.invoke(
-#         {
-#             "messages": [
-#                 HumanMessage(content=request.prompt)
-#             ]
-#         }
-#     )
-
-#     try:
-#         return ChatResponse(
-#             response=result["messages"][-1].content[0]["text"]
-#         )
-#     except Exception as e:
-#             return f"Error {e}"
-
     
 @router.post("", response_model=ChatResponse)
 async def chat(request: ChatRequest):
@@ -50,7 +29,7 @@ async def chat(request: ChatRequest):
     try:
         result = await sql_graph.ainvoke({"question": request.prompt})
     except Exception as e:
-        print(e)    
+        print(e)
         raise HTTPException(status_code=500, detail=f"Falha no agente: {e}")
 
     return ChatResponse(
@@ -63,14 +42,6 @@ async def chat(request: ChatRequest):
         elapsed_ms=int((time.perf_counter() - inicio) * 1000),
         error=result.get("error"),
     )
-
-    try:
-        return ChatResponse(
-            response=result["messages"][-1].content[0]["text"]
-        )
-    except Exception as e:
-            return f"Error {e}"
-
 
 @router.post(
      "/fake",
