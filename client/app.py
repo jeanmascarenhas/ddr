@@ -71,6 +71,7 @@ async def on_message(message: cl.Message):
             async with client.stream(
                 "POST",
                 f"{BACKEND_URL}/chat/stream",
+                # f"{BACKEND_URL}/chat/fake", # keep to test the frontend without a backend
                 json={"prompt": message.content},
                 headers={"Accept": "text/event-stream"},
             ) as response:

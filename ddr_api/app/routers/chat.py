@@ -43,36 +43,6 @@ async def chat(request: ChatRequest):
         error=result.get("error"),
     )
 
-@router.post(
-     "/fake",
-     response_model=ChatResponse, tags=["Fake"]
-)
-async def fake_chat(request: ChatRequest):
-
-    full_text =f"""Fake response for prompt: {request.prompt} +\n
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                        accusantium doloremque laudantium, totam rem aperiam, eaque 
-                        ipsa quae ab illo inventore veritatis et quasi architecto  
-                        beatae vitae dicta sunt explicabo. Nemo enim ipsam 
-                        voluptatem quia voluptas sit aspernatur aut odit aut 
-                        fugit, sed quia consequuntur magni dolores eos qui 
-                        ratione voluptatem sequi nesciunt. Neque porro quisquam est, 
-                        qui dolorem ipsum quia dolor sit amet, consectetur, adipisci 
-                        velit, sed quia non numquam eius modi tempora incidunt ut 
-                        labore et dolore magnam aliquam quaerat voluptatem. Ut enim 
-                        ad minima veniam, quis nostrum exercitationem ullam corporis 
-                        suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
-                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit 
-                        esse quam nihil molestiae consequatur, vel illum qui dolorem eum 
-                        fugiat quo voluptas nulla pariatur?"""
-
-    async def generate():
-         words = full_text.split(" ")
-         for word in words:
-             yield word + " "
-            #  await asyncio.sleep(0.002)
-
-    return StreamingResponse(generate(), media_type="text/plain")
 NODE_LABELS = {
     "select_tables": "🔍 Selecionando tabelas relevantes...",
     "generate_sql": "🧠 Gerando consulta SQL...",
@@ -86,15 +56,65 @@ def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n"
 
 
-@router.post("/stream")
-async def chat_stream(request: ChatRequest):
-    def gerar():
+FAKE_LOREM = (
+    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem "
+    "accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo "
+    "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. "
+    "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, "
+    "sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+)
+
+FAKE_STEPS = [
+    ("select_tables", {"tables": ["clientes", "pedidos"]}),
+    ("generate_sql", {"sql": "SELECT c.nome, COUNT(*) AS total\nFROM pedidos p\nJOIN clientes c ON c.id = p.cliente_id\nGROUP BY c.nome;"}),
+    ("validate_sql", {"attempts": 1}),
+    ("execute_sql", {}),
+]
+
+
+@router.post("/fake", tags=["Fake"])
+async def fake_chat(request: ChatRequest):
+    async def generate():
         inicio = time.perf_counter()
         try:
-            for update in sql_graph.stream(
+            for node_name, detail in FAKE_STEPS:
+                yield sse("step", {
+                    "node": node_name,
+                    "label": NODE_LABELS.get(node_name, node_name),
+                    "detail": detail,
+                })
+                await asyncio.sleep(0.2)  # simula latência; remova se quiser instantâneo
+
+            yield sse("step", {
+                "node": "answer",
+                "label": NODE_LABELS["answer"],
+                "detail": {},
+            })
+            yield sse("final", {
+                "answer": f"Fake response for prompt: {request.prompt}\n\n{FAKE_LOREM}",
+                "elapsed_ms": int((time.perf_counter() - inicio) * 1000),
+            })
+        except Exception as e:
+            yield sse("error", {"message": str(e)})
+
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@router.post("/stream")
+async def chat_stream(request: ChatRequest):
+    async def gerar():
+        inicio = time.perf_counter()
+        try:
+            async for update in sql_graph.astream(
                 {"question": request.prompt}, stream_mode="updates"
             ):
                 for node_name, node_output in update.items():
+                    node_output = node_output or {}
+
                     yield sse("step", {
                         "node": node_name,
                         "label": NODE_LABELS.get(node_name, node_name),
@@ -110,6 +130,11 @@ async def chat_stream(request: ChatRequest):
                             "elapsed_ms": int((time.perf_counter() - inicio) * 1000),
                         })
         except Exception as e:
-            yield sse("error", {"detail": str(e)})
+            print("Erro no stream")
+            yield sse("error", {"message": str(e)})
 
-    return StreamingResponse(gerar(), media_type="text/event-stream")
+    return StreamingResponse(
+        gerar(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
