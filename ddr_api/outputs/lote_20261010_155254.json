@@ -1,0 +1,3531 @@
+{
+  "executado_em": "2026-10-10T15:52:54",
+  "seed": 185851,
+  "total_perguntas": 60,
+  "com_erro": 0,
+  "tempo_total_ms": 50250,
+  "concorrencia": 5,
+  "validacao_ativa": true,
+  "resumo_validacao": {
+    "geral": {
+      "total": 60,
+      "aprovadas": 49,
+      "parciais": 8,
+      "reprovadas": 3,
+      "indefinidas": 0,
+      "nota_media": 4.77
+    },
+    "por_grupo": {
+      "operacional": {
+        "total": 20,
+        "aprovadas": 17,
+        "parciais": 1,
+        "reprovadas": 2,
+        "indefinidas": 0,
+        "nota_media": 4.71
+      },
+      "acompanhamento": {
+        "total": 20,
+        "aprovadas": 18,
+        "parciais": 2,
+        "reprovadas": 0,
+        "indefinidas": 0,
+        "nota_media": 4.89
+      },
+      "analitica": {
+        "total": 20,
+        "aprovadas": 14,
+        "parciais": 5,
+        "reprovadas": 1,
+        "indefinidas": 0,
+        "nota_media": 4.71
+      }
+    }
+  },
+  "resultados": [
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00002",
+      "pergunta": "O pedido de compra P00002 já foi recebido?",
+      "tabelas": [
+        "purchase_order",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "res_partner",
+        "purchase_order_line",
+        "account_move_purchase_order_rel",
+        "stock_picking_type",
+        "stock_move"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.date_planned AS data_prevista, po.effective_date AS data_recebimento_efetivo FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00002') LIMIT 200",
+      "resposta": "Sim, o pedido de compra P00002 já foi recebido. O status de recebimento é \"full\" (total) e a data de recebimento efetivo ocorreu em 26/09/2026 às 11:22:29.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00002",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "full",
+          "data_prevista": "2026-09-26 11:20:12",
+          "data_recebimento_efetivo": "2026-09-26 11:22:29"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2643,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao pedido, utilizando corretamente as tabelas e filtros. A resposta final utilizou apenas os dados retornados e traduziu os termos técnicos com clareza.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1107
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00003",
+      "pergunta": "Vocês já deram entrada no pedido P00003?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking_type",
+        "stock_move"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS quantidade_faturas, po.date_planned AS data_prevista, po.effective_date AS data_efetiva, sp.name AS numero_recebimento, sp.state AS status_recebimento_estoque, sp.date_done AS data_conclusao_recebimento FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id LEFT JOIN public.purchase_order_stock_picking_rel AS pospr ON pospr.purchase_order_id = po.id LEFT JOIN public.stock_picking AS sp ON sp.id = pospr.stock_picking_id WHERE UPPER(po.name) = UPPER('P00003') ORDER BY sp.date_done DESC NULLS LAST LIMIT 200",
+      "resposta": "Sim, o pedido P00003 (fornecedor: JJMM ENTERPRISES L.L.C.) já teve a entrada dada. \n\nO status do pedido é \"confirmado\", o recebimento está completo e a operação de estoque (número WH/IN/00004) foi concluída em 10/10/2026 às 17:29.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "full",
+          "status_faturamento": "to invoice",
+          "quantidade_faturas": 0,
+          "data_prevista": "2026-10-10 17:09:46",
+          "data_efetiva": "2026-10-10 17:29:24",
+          "numero_recebimento": "WH/IN/00004",
+          "status_recebimento_estoque": "done",
+          "data_conclusao_recebimento": "2026-10-10 17:29:24"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3073,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A resposta utiliza perfeitamente os dados retornados do SQL, traduzindo os status de forma clara e respondendo com exatidão à pergunta do usuário.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1110
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00005",
+      "pergunta": "A mercadoria referente ao pedido de compra P00005 já chegou?",
+      "tabelas": [
+        "purchase_order",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "res_partner",
+        "purchase_order_line",
+        "account_move_purchase_order_rel",
+        "stock_picking_type",
+        "stock_move"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.date_planned AS data_prevista, po.effective_date AS data_primeiro_recebimento, pol.name AS produto, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, CASE WHEN po.receipt_status = 'full' THEN 'Sim, totalmente recebido' WHEN po.receipt_status = 'partial' THEN 'Sim, parcialmente recebido' ELSE 'Não, pendente de recebimento' END AS situacao_entrega FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id JOIN public.purchase_order_line AS pol ON pol.order_id = po.id WHERE UPPER(po.name) = UPPER('P00005') AND pol.display_type IS NULL ORDER BY pol.id LIMIT 200",
+      "resposta": "Não, a mercadoria referente ao pedido de compra **P00005** (fornecedor: ABB-teste) ainda não chegou. \n\nO pedido está confirmado, mas o status de recebimento consta como pendente e nenhuma quantidade foi recebida até o momento para os seguintes itens (500 unidades de cada):\n* **[RES-10353]** Resistor 1M Ohm - Generic\n* **[RES-10152]** Resistor 10k Ohm - Wurth\n* **[TEC-10134]** Teclado Mechanical Blue - Murata\n* **[MOU-10566]** Mouse Optical USB - Intel\n\nA data prevista para entrega é **17/10/2026**.",
+      "linhas": 4,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_prevista": "2026-10-17 18:08:19",
+          "data_primeiro_recebimento": null,
+          "produto": "[RES-10353] Resistor 1M Ohm - Generic",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "500.00",
+          "situacao_entrega": "Não, pendente de recebimento"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_prevista": "2026-10-17 18:08:19",
+          "data_primeiro_recebimento": null,
+          "produto": "[RES-10152] Resistor 10k Ohm - Wurth",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "500.00",
+          "situacao_entrega": "Não, pendente de recebimento"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_prevista": "2026-10-17 18:08:19",
+          "data_primeiro_recebimento": null,
+          "produto": "[TEC-10134] Teclado Mechanical Blue - Murata",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "500.00",
+          "situacao_entrega": "Não, pendente de recebimento"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_prevista": "2026-10-17 18:08:19",
+          "data_primeiro_recebimento": null,
+          "produto": "[MOU-10566] Mouse Optical USB - Intel",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "500.00",
+          "situacao_entrega": "Não, pendente de recebimento"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3343,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL está correta, os dados retornados foram fielmente traduzidos para o usuário e a pergunta foi respondida de forma clara e detalhada.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1152
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00007",
+      "pergunta": "Gostaria de saber se o recebimento do pedido P00007 já foi concluído no sistema.",
+      "tabelas": [
+        "stock_picking",
+        "purchase_order",
+        "purchase_order_stock_picking_rel",
+        "stock_picking_type",
+        "stock_move",
+        "res_partner",
+        "purchase_order_line",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_fatura, po.date_planned AS data_prevista, po.effective_date AS data_efetivo_recebimento, CASE WHEN po.receipt_status = 'full' THEN 'Concluído' WHEN po.receipt_status = 'partial' THEN 'Parcialmente Concluído' ELSE 'Pendente' END AS situacao_recebimento FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00007') LIMIT 200",
+      "resposta": "Não, o recebimento do pedido **P00007** (fornecedor: JJMM ENTERPRISES L.L.C.) ainda não foi totalmente concluído. \n\nAtualmente, ele se encontra com a situação de recebimento **Parcialmente Concluído** (`partial`).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "status_fatura": "to invoice",
+          "data_prevista": "2026-10-10 18:10:41",
+          "data_efetivo_recebimento": "2026-10-10 18:12:34",
+          "situacao_recebimento": "Parcialmente Concluído"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2853,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A resposta utiliza rigorosamente apenas as informações retornadas pelo SQL, respondendo de forma clara e direta à pergunta do usuário sobre o status do pedido P00007.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1913
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00004",
+      "pergunta": "O material do pedido P00004 já consta como entregue para nós?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "stock_move",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking_type"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, pol.product_qty - pol.qty_received AS quantidade_pendente, po.receipt_status AS status_recebimento_pedido, po.state AS status_pedido FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id JOIN public.purchase_order_line AS pol ON pol.order_id = po.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE UPPER(po.name) = UPPER('P00004') AND pol.display_type IS NULL ORDER BY pt.name ->> 'pt_BR', pp.default_code LIMIT 200",
+      "resposta": "Não, o material do pedido **P00004** ainda não consta como entregue. \n\nTodos os itens do pedido possuem quantidade recebida igual a zero e quantidade pendente total:\n* **Capacitor 10uF - AMD** (SKU: CAP-10104): 600 pedidas, 0 recebidas, 600 pendentes.\n* **Capacitor Electrolytic - AMD** (SKU: CAP-10422): 5 pedidas, 0 recebidas, 5 pendentes.\n* **Resistor 1k Ohm - Generic** (SKU: RES-10361): 600 pedidas, 0 recebidas, 600 pendentes.\n\nO status de recebimento do pedido está como pendente (`pending`) e o status do pedido está como confirmado (`purchase`).",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Capacitor 10uF - AMD",
+          "sku": "CAP-10104",
+          "quantidade_pedida": "600.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "600.00",
+          "status_recebimento_pedido": "pending",
+          "status_pedido": "purchase"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Capacitor Electrolytic - AMD",
+          "sku": "CAP-10422",
+          "quantidade_pedida": "5.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "5.00",
+          "status_recebimento_pedido": "pending",
+          "status_pedido": "purchase"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Resistor 1k Ohm - Generic",
+          "sku": "RES-10361",
+          "quantidade_pedida": "600.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "600.00",
+          "status_recebimento_pedido": "pending",
+          "status_pedido": "purchase"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3323,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A resposta utiliza rigorosamente apenas os dados retornados, a SQL está correta e atende perfeitamente à pergunta, e a explicação é clara, objetiva e traduz os termos técnicos adecuadamente.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1083
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00003",
+      "pergunta": "Qual o status da NF P00003?",
+      "tabelas": [
+        "purchase_order",
+        "account_move",
+        "account_move_purchase_order_rel",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS qtd_faturas, am.name AS numero_fatura, am.ref AS referencia_nf, am.state AS status_fatura, am.payment_state AS status_pagamento FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id LEFT JOIN account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' WHERE UPPER(po.name) = UPPER('P00003') ORDER BY am.invoice_date DESC NULLS LAST LIMIT 200",
+      "resposta": "Com base nos dados fornecidos, o pedido associado à NF P00003 possui o status de confirmado (`purchase`), o status de recebimento é total (`full`), o status de faturamento é \"a faturar\" (`to invoice`) e ainda não há faturas registradas (quantidade de faturas igual a 0, com número de fatura, referência, status da fatura e status de pagamento nulos).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "full",
+          "status_faturamento": "to invoice",
+          "qtd_faturas": 0,
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "status_fatura": null,
+          "status_pagamento": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2959,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A pergunta utilizou corretamente o glossário para tratar 'NF P00003' como o pedido de compra P00003, gerou uma consulta SQL precisa com LEFT JOIN para capturar dados da fatura caso existissem, e a resposta final refletiu fielmente as colunas retornadas.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 905
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00001",
+      "pergunta": "Como está a situação atual da nota fiscal P00001?",
+      "tabelas": [
+        "purchase_order",
+        "account_move",
+        "account_move_purchase_order_rel",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS quantidade_faturas, am.name AS numero_fatura_interno, am.ref AS referencia_fornecedor_nf, am.state AS status_fatura, am.payment_state AS status_pagamento_fatura, am.invoice_date AS data_fatura, am.amount_total AS valor_total_fatura FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN public.account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' AND am.state <> 'cancel' WHERE UPPER(po.name) = UPPER('P00001') LIMIT 200",
+      "resposta": "Com base nos dados obtidos para o pedido/nota fiscal **P00001** (fornecedor: JJMM ENTERPRISES L.L.C.):\n\n* **Status do pedido:** Confirmado (`purchase`)\n* **Status de recebimento:** Concluído (`full`)\n* **Status de faturamento:** A faturar (`to invoice`)\n* **Quantidade de faturas:** 0\n\nNão há faturas registradas para este pedido no momento (todos os campos relacionados à fatura estão vazios).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00001",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "full",
+          "status_faturamento": "to invoice",
+          "quantidade_faturas": 0,
+          "numero_fatura_interno": null,
+          "referencia_fornecedor_nf": null,
+          "status_fatura": null,
+          "status_pagamento_fatura": null,
+          "data_fatura": null,
+          "valor_total_fatura": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3862,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao glossário (que define 'nota fiscal' P00001 como um pedido de compra), utilizou LEFT JOIN corretamente para o caso de não haver faturas, e a resposta final traduziu com clareza os status técnicos obtidos nos dados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1045
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00003",
+      "pergunta": "Podem me atualizar sobre o andamento da NF P00003?",
+      "tabelas": [
+        "purchase_order",
+        "account_move",
+        "account_move_purchase_order_rel",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS qtd_faturas, po.date_order AS data_pedido, po.date_planned AS data_prevista, po.effective_date AS data_recebimento, am.name AS numero_fatura, am.ref AS referencia_nf, am.state AS status_fatura, am.payment_state AS status_pagamento FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN public.account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' AND am.state <> 'cancel' WHERE UPPER(po.name) = UPPER('P00003') LIMIT 200",
+      "resposta": "Aqui está a atualização sobre o pedido **P00003** (JJMM ENTERPRISES L.L.C.):\n\n* **Status do pedido:** Confirmado (*purchase*)\n* **Status de recebimento:** Concluído integralmente (*full*), recebido em 10/10/2026 às 17:29.\n* **Status de faturamento:** A faturar (*to invoice*)\n* **Quantidade de faturas:** 0 (nenhuma fatura/nota fiscal foi emitida ou vinculada até o momento).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "full",
+          "status_faturamento": "to invoice",
+          "qtd_faturas": 0,
+          "data_pedido": "2026-10-10 17:09:46",
+          "data_prevista": "2026-10-10 17:09:46",
+          "data_recebimento": "2026-10-10 17:29:24",
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "status_fatura": null,
+          "status_pagamento": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3073,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao pedido utilizando as regras e tabelas corretas, e a resposta final refletiu com precisão os dados retornados, traduzindo adequadamente os termos técnicos.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 998
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00005",
+      "pergunta": "Em que fase de processamento ou pagamento se encontra a nota P00005?",
+      "tabelas": [
+        "purchase_order",
+        "account_move",
+        "account_move_purchase_order_rel",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS quantidade_nfs, am.name AS numero_fatura, am.ref AS referencia_nf, am.state AS status_fatura, am.payment_state AS status_pagamento_fatura, am.amount_total AS valor_total_fatura, am.amount_residual AS valor_residual_fatura FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN public.account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' WHERE UPPER(po.name) = UPPER('P00005') ORDER BY am.create_date DESC NULLS LAST LIMIT 200",
+      "resposta": "Com base nos dados fornecidos, o pedido **P00005** (fornecedor: ABB-teste) encontra-se na seguinte fase:\n\n* **Status do pedido:** Confirmado (`purchase`)\n* **Status de recebimento:** Pendente (`pending`)\n* **Status de faturamento:** Nenhum (`no`), pois ainda não há faturas vinculadas (`quantidade_nfs`: 0).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "quantidade_nfs": 0,
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "status_fatura": null,
+          "status_pagamento_fatura": null,
+          "valor_total_fatura": null,
+          "valor_residual_fatura": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2960,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao pedido utilizando as regras e joins adequados, e a resposta final traduziu corretamente os status técnicos com base estritamente nos dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 918
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00004",
+      "pergunta": "A NF P00004 já foi liberada ou ainda está pendente?",
+      "tabelas": [
+        "purchase_order",
+        "account_move",
+        "account_move_purchase_order_rel",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS qtd_faturas, am.name AS numero_fatura, am.ref AS referencia_fornecedor, am.state AS status_fatura, am.payment_state AS status_pagamento, CASE WHEN po.invoice_count > 0 AND am.state = 'posted' THEN 'Liberada' WHEN po.invoice_count > 0 AND am.state = 'draft' THEN 'Aguardando conferência (Rascunho)' WHEN po.invoice_status = 'to invoice' AND po.invoice_count = 0 THEN 'Pendente (Recebido, aguardando NF)' WHEN po.receipt_status IN ('pending', 'partial') AND po.invoice_count = 0 THEN 'Pendente (Aguardando recebimento e NF)' ELSE 'Pendente' END AS status_nf_pedido FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN public.account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' AND am.state <> 'cancel' WHERE UPPER(po.name) = UPPER('P00004') LIMIT 200",
+      "resposta": "A nota fiscal do pedido P00004 ainda está **pendente**, especificamente com o status \"Pendente (Aguardando recebimento e NF)\", pois ainda não há faturas registradas para este pedido (`qtd_faturas`: 0).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "qtd_faturas": 0,
+          "numero_fatura": null,
+          "referencia_fornecedor": null,
+          "status_fatura": null,
+          "status_pagamento": null,
+          "status_nf_pedido": "Pendente (Aguardando recebimento e NF)"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2901,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao pedido utilizando a glossologia e as tabelas corretas, e a resposta baseou-se estritamente nos dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 990
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00004",
+      "pergunta": "Qual fornecedor enviou a NF P00004?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.date_order AS data_pedido, po.amount_total AS valor_total FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00004') LIMIT 200",
+      "resposta": "O fornecedor que enviou o pedido P00004 é o Fornecedor-teste.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "data_pedido": "2026-10-17 17:37:02",
+          "valor_total": "5962.35"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2294,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A pergunta foi respondida com base exata nas colunas retornadas pelo SQL, aplicando corretamente o glossário que trata a 'NF' P00004 como pedido de compra (purchase_order.name).",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 856
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00003",
+      "pergunta": "De qual empresa é essa nota fiscal P00003?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.company_id AS id_empresa FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00003') LIMIT 200",
+      "resposta": "A nota fiscal (pedido) P00003 pertence à empresa com o ID 1, e o fornecedor é a JJMM ENTERPRISES L.L.C.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "id_empresa": 1
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2271,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta responde corretamente à pergunta utilizando o glossário para tratar P00003 como pedido de compra, unindo com res_partner para obter o fornecedor e retornando a company_id conforme esperado.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 889
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00006",
+      "pergunta": "Quem consta como o emissor da NF P00006?",
+      "tabelas": [
+        "account_move",
+        "purchase_order",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.date_approve AS data_aprovacao, am.name AS numero_nf_interno, am.ref AS referencia_nf, am.state AS status_nf, am.payment_state AS status_pagamento FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id LEFT JOIN account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' WHERE UPPER(po.name) = UPPER('P00006') LIMIT 200",
+      "resposta": "O fornecedor (emissor) associado ao pedido P00006 é **Fornecedor-teste**. No entanto, o resultado indica que ainda não há nota fiscal emitida vinculada a este pedido (`numero_nf_interno` e `referencia_nf` constam como nulos).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00006",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "sent",
+          "data_aprovacao": null,
+          "numero_nf_interno": null,
+          "referencia_nf": null,
+          "status_nf": null,
+          "status_pagamento": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2851,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta tratou corretamente o termo 'P00006' como um pedido de compra (conforme o glossário) e identificou com precisão o fornecedor associado ('Fornecedor-teste'), informando também de forma transparente que ainda não há nota fiscal emitida para ele.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 940
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00003",
+      "pergunta": "Essa nota P00003 está vinculada a qual parceiro de negócio no sistema?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS parceiro_negocio, rp.vat AS cnpj_cpf, po.state AS status_pedido FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00003') LIMIT 200",
+      "resposta": "A nota P00003 está vinculada ao parceiro de negócio **JJMM ENTERPRISES L.L.C.** (CNPJ/CPF: dd2e23216641d3as), e o status do pedido é **confirmado**.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00003",
+          "parceiro_negocio": "JJMM ENTERPRISES L.L.C.",
+          "cnpj_cpf": "dd2e23216641d3as",
+          "status_pedido": "purchase"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2586,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta responde corretamente à pergunta utilizando o glossário para tratar 'nota P00003' como pedido de compra (purchase_order.name). Os dados retornados foram fielmente traduzidos para o usuário de forma clara e objetiva.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1003
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00006",
+      "pergunta": "Vocês sabem me dizer o nome do fornecedor atrelado à NF P00006?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS nome_fornecedor FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00006') LIMIT 200",
+      "resposta": "O fornecedor atrelado à NF (pedido) P00006 é o **Fornecedor-teste**.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00006",
+          "nome_fornecedor": "Fornecedor-teste"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2141,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente a regra do glossário para interpretar 'NF P00006' como um pedido de compra (purchase_order.name), fazendo o JOIN adequado com res_partner. A resposta final reflete fielmente os dados retornados de forma clara e objetiva.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 942
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00001",
+      "pergunta": "Qual a quantidade recebida do material P00001?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "stock_picking",
+        "stock_move",
+        "purchase_order_stock_picking_rel",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking_type"
+      ],
+      "sql": "SELECT COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS codigo_interno, SUM(pol.qty_received) AS quantidade_recebida, SUM(pol.product_qty) AS quantidade_pedida, COALESCE(u.name ->> 'pt_BR', u.name ->> 'en_US') AS unidade FROM purchase_order AS po JOIN purchase_order_line AS pol ON pol.order_id = po.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN uom_uom AS u ON pol.product_uom_id = u.id WHERE UPPER(po.name) = UPPER('P00001') AND pol.display_type IS NULL GROUP BY COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US'), pp.default_code, COALESCE(u.name ->> 'pt_BR', u.name ->> 'en_US') ORDER BY produto LIMIT 200",
+      "resposta": "Com base no pedido **P00001**, foram recebidos os seguintes materiais:\n\n* **Alto-falante 5W Bluetooth - Epcos** (ALT-10675): 100,00 Unidades (100,00 pedidas)\n* **Capacitor 1000uF - Murata** (CAP-10804): 500,00 Unidades (500,00 pedidas)\n* **Capacitor 2200uF - Generic** (CAP-10055): 500,00 Unidades (500,00 pedidas)\n* **Resistor 100k Ohm - Asus** (RES-10075): 500,00 Unidades (500,00 pedidas)",
+      "linhas": 4,
+      "linhas_amostra": [
+        {
+          "produto": "Alto-falante 5W Bluetooth - Epcos",
+          "codigo_interno": "ALT-10675",
+          "quantidade_recebida": "100.00",
+          "quantidade_pedida": "100.00",
+          "unidade": "Unidades"
+        },
+        {
+          "produto": "Capacitor 1000uF - Murata",
+          "codigo_interno": "CAP-10804",
+          "quantidade_recebida": "500.00",
+          "quantidade_pedida": "500.00",
+          "unidade": "Unidades"
+        },
+        {
+          "produto": "Capacitor 2200uF - Generic",
+          "codigo_interno": "CAP-10055",
+          "quantidade_recebida": "500.00",
+          "quantidade_pedida": "500.00",
+          "unidade": "Unidades"
+        },
+        {
+          "produto": "Resistor 100k Ohm - Asus",
+          "codigo_interno": "RES-10075",
+          "quantidade_recebida": "500.00",
+          "quantidade_pedida": "500.00",
+          "unidade": "Unidades"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2975,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 3,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "A pergunta pediu a quantidade recebida do material 'P00001', o que foi interpretado (corretamente pelo glossário) como o pedido P00001, mas o SQL retornou TODOS os materiais do pedido e não apenas o material P00001."
+        ],
+        "sugestao": "Se o usuário citar um código de material específico (ou se 'P00001' fosse um SKU), deveria filtrar por product_product.default_code. Como o glossário definiu que 'P00001' é o número do pedido, o SQL está correto em relação à regra de negócio, mas a aderência à pergunta literal ('do material P00001') fica ambígua.",
+        "justificativa": "A resposta utiliza fielmente os dados retornados e apresenta as informações de forma clara, porém a interpretação da pergunta assumiu que P00001 era o pedido inteiro e não um item específico.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1482
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00002",
+      "pergunta": "Quantas unidades do item P00002 chegaram na entrega?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "stock_picking_type",
+        "stock_move",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, SUM(pol.qty_received) AS quantidade_recebida FROM public.purchase_order AS po JOIN public.purchase_order_line AS pol ON pol.order_id = po.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE UPPER(po.name) = UPPER('P00002') AND pol.display_type IS NULL GROUP BY po.name, pt.name LIMIT 200",
+      "resposta": "Com base na entrega do pedido P00002, chegaram as seguintes quantidades:\n\n* **10,00** unidades do produto \"Alto-falante 3W 4Ohm - Corsair\"\n* **10,00** unidades do produto \"Alto-falante Buzzer 5V - Corsair\"",
+      "linhas": 2,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00002",
+          "produto": "Alto-falante 3W 4Ohm - Corsair",
+          "quantidade_recebida": "10.00"
+        },
+        {
+          "numero_pedido": "P00002",
+          "produto": "Alto-falante Buzzer 5V - Corsair",
+          "quantidade_recebida": "10.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2517,
+      "validacao": {
+        "veredito": "reprovada",
+        "nota_media": 2.5,
+        "notas": {
+          "fidelidade": 1,
+          "aderencia": 3,
+          "sql": 3,
+          "clareza": 3
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "A pergunta pedia as unidades do item P00002 (tratado como SKU/código ou nome de produto específico), mas o SQL buscou o pedido de compra P00002 inteiro e retornou múltiplos produtos distintos associados a ele.",
+          "Fidelidade comprometida: a resposta afirma que chegaram quantidades de dois produtos diferentes (Alto-falante 3W e Alto-falante Buzzer), enquanto a pergunta especificava um único item ('P00002')."
+        ],
+        "sugestao": "Se 'P00002' for o código do produto (default_code), o filtro deveria ser aplicado na tabela product_product (default_code) em vez de na tabela purchase_order (name).",
+        "justificativa": "O assistente confundiu o termo 'item P00002' com o número do pedido de compra P00002, trazendo todos os itens do pedido em vez de filtrar pelo produto específico solicitado.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1394
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00002",
+      "pergunta": "Qual foi o volume total que deu entrada no estoque para o material P00002?",
+      "tabelas": [
+        "stock_move",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT pt.default_code AS codigo_produto, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS nome_produto, SUM(sm.quantity) AS volume_total_entrada FROM public.stock_move AS sm JOIN public.stock_picking AS sp ON sm.picking_id = sp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE sm.state = 'done' AND (UPPER(sm.origin) = UPPER('P00002') OR UPPER(sp.origin) = UPPER('P00002')) GROUP BY pt.default_code, pt.name ORDER BY volume_total_entrada DESC LIMIT 200",
+      "resposta": "O volume total que deu entrada no estoque para a origem \"P00002\" (com status concluído) refere-se a dois produtos:\n- **Alto-falante 3W 4Ohm - Corsair** (código `ALT-10112`): 10,00\n- **Alto-falante Buzzer 5V - Corsair** (código `ALT-13550`): 10,00",
+      "linhas": 2,
+      "linhas_amostra": [
+        {
+          "codigo_produto": "ALT-10112",
+          "nome_produto": "Alto-falante 3W 4Ohm - Corsair",
+          "volume_total_entrada": "10.00"
+        },
+        {
+          "codigo_produto": "ALT-13550",
+          "nome_produto": "Alto-falante Buzzer 5V - Corsair",
+          "volume_total_entrada": "10.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3141,
+      "validacao": {
+        "veredito": "reprovada",
+        "nota_media": 2.75,
+        "notas": {
+          "fidelidade": 2,
+          "aderencia": 2,
+          "sql": 3,
+          "clareza": 4
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "A pergunta pedia o volume de entrada para o material P00002, mas o SQL interpretou P00002 como o número de um pedido/origem (origin), trazendo dois materiais diferentes.",
+          "A resposta final confunde o código/material com o número do pedido."
+        ],
+        "sugestao": "Ajustar o filtro do SQL para buscar o material pelo código (default_code ou ILIKE) em vez de filtrar por origin igual a P00002.",
+        "justificativa": "O assistente respondeu sobre a origem/pedido P00002 em vez do material com código P00002, gerando dados inconsistentes com o que foi perguntado.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1363
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00006",
+      "pergunta": "Pode me confirmar o saldo de peças recebidas para o código P00006?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "stock_move",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking_type"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS codigo_sku, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, uom.name ->> 'pt_BR' AS unidade FROM purchase_order_line AS pol JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN uom_uom AS uom ON pol.product_uom_id = uom.id WHERE UPPER(po.name) = UPPER('P00006') AND pol.display_type IS NULL ORDER BY pt.name ->> 'pt_BR' LIMIT 200",
+      "resposta": "Com base no pedido **P00006** (fornecedor: Fornecedor-teste), o saldo de peças recebidas para os itens é o seguinte:\n\n* **Capacitor Electrolytic - AMD** (SKU: CAP-10422): 0 unidades recebidas (5 pedidas, 5 pendentes).\n* **Capacitor 10uF - AMD** (SKU: CAP-10104): 0 unidades recebidas (600 pedidas, 600 pendentes).\n* **Resistor 1k Ohm - Generic** (SKU: RES-10361): 0 unidades recebidas (600 pedidas, 600 pendentes).\n\nAté o momento, **nenhuma peça foi recebida** para este pedido.",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00006",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Capacitor Electrolytic - AMD",
+          "codigo_sku": "CAP-10422",
+          "quantidade_pedida": "5.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "5.00",
+          "unidade": "Unidades"
+        },
+        {
+          "numero_pedido": "P00006",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Capacitor 10uF - AMD",
+          "codigo_sku": "CAP-10104",
+          "quantidade_pedida": "600.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "600.00",
+          "unidade": "Unidades"
+        },
+        {
+          "numero_pedido": "P00006",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Resistor 1k Ohm - Generic",
+          "codigo_sku": "RES-10361",
+          "quantidade_pedida": "600.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "600.00",
+          "unidade": "Unidades"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3269,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL foi construída corretamente com base nas tabelas do Odoo e nas regras de negócio para o código P00006. A resposta final reflete com exatidão e clareza os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1072
+      }
+    },
+    {
+      "grupo": "operacional",
+      "numero_sorteado": "P00002",
+      "pergunta": "Quanto do material P00002 nós efetivamente recebemos até o momento?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "stock_move",
+        "purchase_order_stock_picking_rel",
+        "res_partner",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking_type"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, COALESCE(u.name ->> 'pt_BR', u.name ->> 'en_US') AS unidade FROM purchase_order_line AS pol JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN uom_uom AS u ON pol.product_uom_id = u.id WHERE UPPER(po.name) = UPPER('P00002') AND pol.display_type IS NULL ORDER BY produto LIMIT 200",
+      "resposta": "Até o momento, foram recebidos os seguintes itens do pedido **P00002** (fornecedor: *JJMM ENTERPRISES L.L.C.*):\n\n1. **Alto-falante 3W 4Ohm - Corsair** (SKU: `ALT-10112`):\n   - Quantidade pedida: 10,00 Unidades\n   - Quantidade recebida: 10,00 Unidades\n   - Quantidade pendente: 0,00 Unidades\n\n2. **Alto-falante Buzzer 5V - Corsair** (SKU: `ALT-13550`):\n   - Quantidade pedida: 10,00 Unidades\n   - Quantidade recebida: 10,00 Unidades\n   - Quantidade pendente: 0,00 Unidades\n\nAmbos os produtos tiveram suas quantidades integralmente recebidas, sem saldo pendente.",
+      "linhas": 2,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00002",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Alto-falante 3W 4Ohm - Corsair",
+          "sku": "ALT-10112",
+          "quantidade_pedida": "10.00",
+          "quantidade_recebida": "10.00",
+          "quantidade_pendente": "0.00",
+          "unidade": "Unidades"
+        },
+        {
+          "numero_pedido": "P00002",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Alto-falante Buzzer 5V - Corsair",
+          "sku": "ALT-13550",
+          "quantidade_pedida": "10.00",
+          "quantidade_recebida": "10.00",
+          "quantidade_pendente": "0.00",
+          "unidade": "Unidades"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3298,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao pedido, utilizando corretamente as tabelas e o filtro para o pedido P00002, e a resposta final refletiu com precisão os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1020
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais NFs estão aguardando conferência?",
+      "tabelas": [
+        "account_move",
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT COALESCE(am.name, am.ref) AS numero_nf, rp.name AS fornecedor, am.state AS status_nf, po.name AS numero_pedido, po.invoice_status AS status_faturamento_pedido, po.receipt_status AS status_recebimento FROM public.account_move AS am JOIN public.res_partner AS rp ON am.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.account_move_id = am.id LEFT JOIN public.purchase_order AS po ON po.id = ampor.purchase_order_id WHERE am.move_type = 'in_invoice' AND am.state = 'draft' UNION SELECT NULL AS numero_nf, rp.name AS fornecedor, NULL AS status_nf, po.name AS numero_pedido, po.invoice_status AS status_faturamento_pedido, po.receipt_status AS status_recebimento FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.invoice_status = 'to invoice' AND po.invoice_count = 0 ORDER BY fornecedor, numero_pedido LIMIT 200",
+      "resposta": "Com base nos dados obtidos, existem pedidos aguardando faturamento (mas ainda sem nota fiscal cadastrada no sistema), associados ao fornecedor **JJMM ENTERPRISES L.L.C.**:\n\n* **Pedido P00001** – Fornecedor: JJMM ENTERPRISES L.L.C. | Status de faturamento: a faturar | Recebimento: total\n* **Pedido P00002** – Fornecedor: JJMM ENTERPRISES L.L.C. | Status de faturamento: a faturar | Recebimento: total\n* **Pedido P00003** – Fornecedor: JJMM ENTERPRISES L.L.C. | Status de faturamento: a faturar | Recebimento: total\n* **Pedido P00007** – Fornecedor: JJMM ENTERPRISES L.L.C. | Status de faturamento: a faturar | Recebimento: parcial\n\nAtualmente, não há notas fiscais em status de rascunho (*draft*) encontradas para conferência, apenas pedidos confirmados que estão aguardando fatura.",
+      "linhas": 4,
+      "linhas_amostra": [
+        {
+          "numero_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_nf": null,
+          "numero_pedido": "P00001",
+          "status_faturamento_pedido": "to invoice",
+          "status_recebimento": "full"
+        },
+        {
+          "numero_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_nf": null,
+          "numero_pedido": "P00002",
+          "status_faturamento_pedido": "to invoice",
+          "status_recebimento": "full"
+        },
+        {
+          "numero_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_nf": null,
+          "numero_pedido": "P00003",
+          "status_faturamento_pedido": "to invoice",
+          "status_recebimento": "full"
+        },
+        {
+          "numero_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_nf": null,
+          "numero_pedido": "P00007",
+          "status_faturamento_pedido": "to invoice",
+          "status_recebimento": "partial"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3297,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "O SQL atendeu perfeitamente ao glossário para 'NF aguardando conferência' usando UNION para faturas em rascunho e pedidos recebidos aguardando fatura, e a resposta final refletiu com precisão os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1053
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais pedidos de compra possuem recebimento pendente?",
+      "tabelas": [
+        "purchase_order",
+        "stock_move",
+        "stock_picking",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "product_product",
+        "product_template",
+        "stock_picking_type"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.date_planned AS data_prevista, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id JOIN public.purchase_order_line AS pol ON pol.order_id = po.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Aqui estão os pedidos de compra com recebimento pendente ou parcial:\n\n* **Pedido P00007** (Fornecedor: *JJMM ENTERPRISES L.L.C.* | Status: Confirmado / Recebimento parcial | Data prevista: 10/10/2026):\n  * **Capacitor Tantalum - Wurth**: Pedido: 500 | Recebido: 30 | Pendente: 470\n  * **Memoria RAM DDR5 32GB - Nvidia**: Pedido: 100 | Recebido: 50 | Pendente: 50\n  * **Resistor 100k Ohm - Intel**: Pedido: 1.500 | Recebido: 600 | Pendente: 900\n\n* **Pedido P00004** (Fornecedor: *Fornecedor-teste* | Status: Confirmado / Recebimento pendente | Data prevista: 17/10/2026):\n  * **Capacitor 10uF - AMD**: Pedido: 600 | Recebido: 0 | Pendente: 600\n  * **Capacitor Electrolytic - AMD**: Pedido: 5 | Recebido: 0 | Pendente: 5\n  * **Resistor 1k Ohm - Generic**: Pedido: 600 | Recebido: 0 | Pendente: 600\n\n* **Pedido P00005** (Fornecedor: *ABB-teste* | Status: Confirmado / Recebimento pendente | Data prevista: 17/10/2026):\n  * **Resistor 10k Ohm - Wurth**: Pedido: 500 | Recebido: 0 | Pendente: 500\n  * **Mouse Optical USB - Intel**: Pedido: 500 | Recebido: 0 | Pendente: 500\n  * **Teclado Mechanical Blue - Murata**: Pedido: 500 | Recebido: 0 | Pendente: 500\n  * **Resistor 1M Ohm - Generic**: Pedido: 500 | Recebido: 0 | Pendente: 500",
+      "linhas": 10,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "data_prevista": "2026-10-10 18:10:41",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "30.00",
+          "quantidade_pendente": "470.00",
+          "produto": "Capacitor Tantalum - Wurth"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "data_prevista": "2026-10-10 18:10:41",
+          "quantidade_pedida": "100.00",
+          "quantidade_recebida": "50.00",
+          "quantidade_pendente": "50.00",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "data_prevista": "2026-10-10 18:10:41",
+          "quantidade_pedida": "1500.00",
+          "quantidade_recebida": "600.00",
+          "quantidade_pendente": "900.00",
+          "produto": "Resistor 100k Ohm - Intel"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_prevista": "2026-10-17 17:37:02",
+          "quantidade_pedida": "600.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "600.00",
+          "produto": "Capacitor 10uF - AMD"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_prevista": "2026-10-17 17:37:02",
+          "quantidade_pedida": "5.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "5.00",
+          "produto": "Capacitor Electrolytic - AMD"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3624,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL está correta e bem estruturada, utilizando os filtros adequados para pedidos ativos e com recebimento pendente/parcial. A resposta final apresenta os dados com clareza, fidelidade total às linhas retornadas e boa formatação.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1219
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais entregas estão programadas para hoje?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "stock_move",
+        "res_partner"
+      ],
+      "sql": "SELECT sp.name AS numero_documento, rp.name AS fornecedor, spt.code AS tipo_operacao, sp.state AS status, (sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS data_programada, CASE WHEN sp.state = 'done' THEN 'concluido' ELSE 'pendente' END AS status_entrega FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON spt.id = sp.picking_type_id LEFT JOIN public.res_partner AS rp ON rp.id = sp.partner_id WHERE spt.code = 'incoming' AND sp.state <> 'cancel' AND CAST((sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY sp.scheduled_date ASC, sp.name ASC LIMIT 200",
+      "resposta": "Para hoje, estão programadas as seguintes entregas (recebimentos):\n\n1. **WH/IN/00004**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Data Programada:** 10/10/2026 às 14:09\n   * **Status:** Concluído\n\n2. **WH/IN/00007**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Data Programada:** 10/10/2026 às 15:10\n   * **Status:** Concluído\n\n3. **WH/IN/00008**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Data Programada:** 10/10/2026 às 15:10\n   * **Status:** Pronto para receber (Pendente)",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_documento": "WH/IN/00004",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "tipo_operacao": "incoming",
+          "status": "done",
+          "data_programada": "2026-10-10 14:09:46",
+          "status_entrega": "concluido"
+        },
+        {
+          "numero_documento": "WH/IN/00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "tipo_operacao": "incoming",
+          "status": "done",
+          "data_programada": "2026-10-10 15:10:41",
+          "status_entrega": "concluido"
+        },
+        {
+          "numero_documento": "WH/IN/00008",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "tipo_operacao": "incoming",
+          "status": "assigned",
+          "data_programada": "2026-10-10 15:10:41",
+          "status_entrega": "pendente"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2841,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atende perfeitamente à regra de negócio para 'entregas programadas para hoje' (incoming, sem ser cancelado, com data convertida para o fuso correto). A resposta final traduz os dados com precisão, incluindo os status e fornecedores corretos.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 990
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais materiais tiveram divergência durante o recebimento?",
+      "tabelas": [
+        "stock_move",
+        "stock_picking",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_picking_type",
+        "res_partner",
+        "purchase_order",
+        "uom_uom"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, sp.name AS numero_recebimento, sp.state AS status_recebimento, CASE WHEN sp.backorder_id IS NOT NULL THEN 'Recebimento Parcial (Backorder)' WHEN pol.qty_received <> pol.product_qty THEN 'Divergencia de Quantidade' ELSE 'Outra Divergencia' END AS tipo_divergencia, sp.date_done AS data_conclusao FROM stock_move AS sm JOIN stock_picking AS sp ON sm.picking_id = sp.id JOIN stock_picking_type AS spt ON sp.picking_type_id = spt.id JOIN purchase_order_line AS pol ON sm.purchase_line_id = pol.id JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id JOIN product_product AS pp ON sm.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id WHERE spt.code = 'incoming' AND pol.display_type IS NULL AND (sp.backorder_id IS NOT NULL OR (sp.state = 'done' AND pol.qty_received <> pol.product_qty)) ORDER BY sp.date_done DESC NULLS LAST, po.name, produto LIMIT 200",
+      "resposta": "Com base nos dados obtidos, os seguintes materiais apresentaram divergência durante o recebimento do pedido **P00007** (fornecedor: *JJMM ENTERPRISES L.L.C.*), associados aos recebimentos **WH/IN/00007** (concluído) e **WH/IN/00008** (pronto para receber):\n\n1. **Capacitor Tantalum - Wurth** (SKU: `CAP-27832`)\n   * Quantidade pedida: 500\n   * Quantidade recebida: 30\n   * Quantidade pendente: 470\n   * Tipo de divergência: Divergência de Quantidade / Recebimento Parcial (Backorder)\n\n2. **Memória RAM DDR5 32GB - Nvidia** (SKU: `MEM-10326`)\n   * Quantidade pedida: 100\n   * Quantidade recebida: 50\n   * Quantidade pendente: 50\n   * Tipo de divergência: Divergência de Quantidade / Recebimento Parcial (Backorder)\n\n3. **Resistor 100k Ohm - Intel** (SKU: `RES-10317`)\n   * Quantidade pedida: 1.500\n   * Quantidade recebida: 600\n   * Quantidade pendente: 900\n   * Tipo de divergência: Divergência de Quantidade / Recebimento Parcial (Backorder)",
+      "linhas": 6,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "sku": "CAP-27832",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "30.00",
+          "quantidade_pendente": "470.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Divergencia de Quantidade",
+          "data_conclusao": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "sku": "MEM-10326",
+          "quantidade_pedida": "100.00",
+          "quantidade_recebida": "50.00",
+          "quantidade_pendente": "50.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Divergencia de Quantidade",
+          "data_conclusao": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "sku": "RES-10317",
+          "quantidade_pedida": "1500.00",
+          "quantidade_recebida": "600.00",
+          "quantidade_pendente": "900.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Divergencia de Quantidade",
+          "data_conclusao": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "sku": "CAP-27832",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "30.00",
+          "quantidade_pendente": "470.00",
+          "numero_recebimento": "WH/IN/00008",
+          "status_recebimento": "assigned",
+          "tipo_divergencia": "Recebimento Parcial (Backorder)",
+          "data_conclusao": null
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "sku": "MEM-10326",
+          "quantidade_pedida": "100.00",
+          "quantidade_recebida": "50.00",
+          "quantidade_pendente": "50.00",
+          "numero_recebimento": "WH/IN/00008",
+          "status_recebimento": "assigned",
+          "tipo_divergencia": "Recebimento Parcial (Backorder)",
+          "data_conclusao": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 4041,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de divergência de recebimento, unindo as tabelas necessárias, e a resposta apresentou os dados de forma clara e totalmente fiel ao retorno.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 853
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Tem alguma nota fiscal na fila para ser conferida?",
+      "tabelas": [
+        "account_move",
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT am.name AS numero_fatura, am.ref AS referencia_nf, rp.name AS fornecedor, am.invoice_date AS data_fatura, am.amount_total AS valor_total, am.state AS status_fatura, po.name AS numero_pedido FROM account_move AS am JOIN res_partner AS rp ON am.partner_id = rp.id LEFT JOIN account_move_purchase_order_rel AS ampor ON ampor.account_move_id = am.id LEFT JOIN purchase_order AS po ON ampor.purchase_order_id = po.id WHERE am.move_type = 'in_invoice' AND am.state = 'draft' UNION SELECT NULL AS numero_fatura, NULL AS referencia_nf, rp.name AS fornecedor, NULL AS data_fatura, po.amount_total AS valor_total, po.state AS status_fatura, po.name AS numero_pedido FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.invoice_status = 'to invoice' ORDER BY fornecedor, data_fatura DESC NULLS LAST, numero_pedido DESC LIMIT 200",
+      "resposta": "Sim, há pedidos aguardando faturamento (com status confirmado), mas nenhuma nota fiscal em rascunho na fila para conferência. Os pedidos encontrados são:\n\n* **Pedido P00007** (Fornecedor: JJMM ENTERPRISES L.L.C.) - Valor: 128.221,55\n* **Pedido P00003** (Fornecedor: JJMM ENTERPRISES L.L.C.) - Valor: 128.221,55\n* **Pedido P00002** (Fornecedor: JJMM ENTERPRISES L.L.C.) - Valor: 222,53\n* **Pedido P00001** (Fornecedor: JJMM ENTERPRISES L.L.C.) - Valor: 1.976,85",
+      "linhas": 4,
+      "linhas_amostra": [
+        {
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "valor_total": "128221.55",
+          "status_fatura": "purchase",
+          "numero_pedido": "P00007"
+        },
+        {
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "valor_total": "128221.55",
+          "status_fatura": "purchase",
+          "numero_pedido": "P00003"
+        },
+        {
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "valor_total": "222.53",
+          "status_fatura": "purchase",
+          "numero_pedido": "P00002"
+        },
+        {
+          "numero_fatura": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "valor_total": "1976.85",
+          "status_fatura": "purchase",
+          "numero_pedido": "P00001"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3124,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta cobriu perfeitamente a definição de 'NF aguardando conferência' (faturas em rascunho + pedidos ativos com to invoice), e a resposta final utilizou corretamente os dados retornados para esclarecer a situação ao usuário.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 872
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais são as notas que ainda precisam passar por conferência?",
+      "tabelas": [
+        "account_move",
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT COALESCE(am.name, am.ref) AS numero_documento, rp.name AS fornecedor, am.state AS status_fatura, po.name AS pedido_compra, po.invoice_status AS status_faturamento_pedido, am.invoice_date AS data_fatura, am.amount_total AS valor_total FROM public.account_move AS am LEFT JOIN public.res_partner AS rp ON am.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.account_move_id = am.id LEFT JOIN public.purchase_order AS po ON po.id = ampor.purchase_order_id WHERE am.move_type = 'in_invoice' AND (am.state = 'draft' OR (po.state IN ('purchase', 'done') AND po.invoice_status = 'to invoice')) UNION SELECT NULL AS numero_documento, rp.name AS fornecedor, NULL AS status_fatura, po.name AS pedido_compra, po.invoice_status AS status_faturamento_pedido, NULL AS data_fatura, po.amount_total AS valor_total FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.invoice_status = 'to invoice' AND po.invoice_count = 0 ORDER BY data_fatura DESC NULLS LAST, pedido_compra DESC LIMIT 200",
+      "resposta": "Com base nos dados obtidos, aqui estão os pedidos que ainda precisam de faturamento/conferência (com status de faturamento pendente `\"to invoice\"` e sem fatura emitida):\n\n1. **Pedido:** P00007 | **Fornecedor:** JJMM ENTERPRISES L.L.C. | **Valor Total:** R$ 128.221,55\n2. **Pedido:** P00003 | **Fornecedor:** JJMM ENTERPRISES L.L.C. | **Valor Total:** R$ 128.221,55\n3. **Pedido:** P00002 | **Fornecedor:** JJMM ENTERPRISES L.L.C. | **Valor Total:** R$ 222,53\n4. **Pedido:** P00001 | **Fornecedor:** JJMM ENTERPRISES L.L.C. | **Valor Total:** R$ 1.976,85",
+      "linhas": 4,
+      "linhas_amostra": [
+        {
+          "numero_documento": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_fatura": null,
+          "pedido_compra": "P00007",
+          "status_faturamento_pedido": "to invoice",
+          "data_fatura": null,
+          "valor_total": "128221.55"
+        },
+        {
+          "numero_documento": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_fatura": null,
+          "pedido_compra": "P00003",
+          "status_faturamento_pedido": "to invoice",
+          "data_fatura": null,
+          "valor_total": "128221.55"
+        },
+        {
+          "numero_documento": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_fatura": null,
+          "pedido_compra": "P00002",
+          "status_faturamento_pedido": "to invoice",
+          "data_fatura": null,
+          "valor_total": "222.53"
+        },
+        {
+          "numero_documento": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_fatura": null,
+          "pedido_compra": "P00001",
+          "status_faturamento_pedido": "to invoice",
+          "data_fatura": null,
+          "valor_total": "1976.85"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3211,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao glossário (buscando tanto notas em rascunho quanto pedidos aguardando faturamento), e a resposta final refletiu com precisão e clareza os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 960
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Pode me listar as NFs que estão pendentes de validação?",
+      "tabelas": [
+        "account_move",
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT am.name AS numero_documento, am.ref AS referencia_nf, rp.name AS fornecedor, am.state AS status_fatura, am.invoice_date AS data_fatura, am.amount_total AS valor_total FROM public.account_move AS am JOIN public.res_partner AS rp ON am.partner_id = rp.id WHERE am.move_type = 'in_invoice' AND am.state = 'draft' ORDER BY am.invoice_date DESC, am.id DESC LIMIT 200",
+      "resposta": "Não foram encontradas notas fiscais pendentes de validação (com status de rascunho).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2562,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 3,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [
+          "O glossário define 'NF aguardando conferência' (que é sinônimo prático de pendentes de validação) como account_move.state='draft' OU pedidos ativos recebidos com invoice_status='to invoice'. O SQL buscou apenas account_move.state='draft', ignorando os pedidos aguardando NF."
+        ],
+        "sugestao": "Ampliar o SQL para incluir os pedidos de compra com receipt_status = 'full' e invoice_status = 'to invoice', conforme o glossário de NF aguardando conferência.",
+        "justificativa": "A resposta é fiel aos dados vazios retornados, mas o SQL falhou em cobrir toda a regra de negócio de NFs pendentes definida no glossário (que engloba também pedidos aguardando faturamento).",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1258
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais notas fiscais estão paradas esperando a conferência?",
+      "tabelas": [
+        "account_move",
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT am.name AS numero_documento_nf, am.ref AS referencia_nf, rp.name AS fornecedor, am.invoice_date AS data_fatura, am.invoice_date_due AS data_vencimento, am.amount_total AS valor_total, am.amount_residual AS valor_residual, am.state AS status_nf, po.name AS numero_pedido FROM public.account_move AS am JOIN public.res_partner AS rp ON am.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.account_move_id = am.id LEFT JOIN public.purchase_order AS po ON ampor.purchase_order_id = po.id WHERE am.move_type = 'in_invoice' AND am.state = 'draft' UNION SELECT NULL AS numero_documento_nf, NULL AS referencia_nf, rp.name AS fornecedor, NULL AS data_fatura, NULL AS data_vencimento, po.amount_total AS valor_total, NULL AS valor_residual, po.state AS status_nf, po.name AS numero_pedido FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.invoice_status = 'to invoice' AND po.invoice_count = 0 ORDER BY fornecedor, numero_pedido, data_fatura LIMIT 200",
+      "resposta": "Com base nos dados obtidos, foram encontrados os seguintes pedidos confirmados que ainda aguardam faturamento (equivalente à etapa de conferência/faturamento):\n\n*   **Fornecedor:** JJMM ENTERPRISES L.L.C.\n    *   **Pedido P00001:** Status \"confirmado\", Valor Total: R$ 1.976,85\n    *   **Pedido P00002:** Status \"confirmado\", Valor Total: R$ 222,53\n    *   **Pedido P00003:** Status \"confirmado\", Valor Total: R$ 128.221,55\n    *   **Pedido P00007:** Status \"confirmado\", Valor Total: R$ 128.221,55\n\n*(Nota: Não foram encontradas notas fiscais em rascunho, mas sim pedidos de compra aprovados pendentes de fatura).*",
+      "linhas": 4,
+      "linhas_amostra": [
+        {
+          "numero_documento_nf": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "data_vencimento": null,
+          "valor_total": "1976.85",
+          "valor_residual": null,
+          "status_nf": "purchase",
+          "numero_pedido": "P00001"
+        },
+        {
+          "numero_documento_nf": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "data_vencimento": null,
+          "valor_total": "222.53",
+          "valor_residual": null,
+          "status_nf": "purchase",
+          "numero_pedido": "P00002"
+        },
+        {
+          "numero_documento_nf": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "data_vencimento": null,
+          "valor_total": "128221.55",
+          "valor_residual": null,
+          "status_nf": "purchase",
+          "numero_pedido": "P00003"
+        },
+        {
+          "numero_documento_nf": null,
+          "referencia_nf": null,
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "data_fatura": null,
+          "data_vencimento": null,
+          "valor_total": "128221.55",
+          "valor_residual": null,
+          "status_nf": "purchase",
+          "numero_pedido": "P00007"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3532,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta cobriu perfeitamente a definição de 'NF aguardando conferência' do glossário (faturas em rascunho + pedidos ativos com invoice_status='to invoice' e invoice_count=0), utilizando UNION para unir as duas condições. A resposta final reflete com exatidão os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 953
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais são os pedidos de compra que ainda não deram entrada?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.date_order AS data_pedido, po.date_planned AS data_prevista FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Com base nos dados fornecidos, estes são os pedidos de compra que ainda não deram entrada (pendentes ou com recebimento parcial):\n\n1. **Pedido P00007**\n   - **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   - **Status do pedido:** Confirmado\n   - **Status de recebimento:** Parcial\n   - **Data do pedido:** 10/10/2026\n   - **Data prevista:** 10/10/2026\n\n2. **Pedido P00004**\n   - **Fornecedor:** Fornecedor-teste\n   - **Status do pedido:** Confirmado\n   - **Status de recebimento:** Pendente\n   - **Data do pedido:** 17/10/2026\n   - **Data prevista:** 17/10/2026\n\n3. **Pedido P00005**\n   - **Fornecedor:** ABB-teste\n   - **Status do pedido:** Confirmado\n   - **Status de recebimento:** Pendente\n   - **Data do pedido:** 17/10/2026\n   - **Data prevista:** 17/10/2026",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "data_pedido": "2026-10-10 18:10:41",
+          "data_prevista": "2026-10-10 18:10:41"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_pedido": "2026-10-17 17:37:02",
+          "data_prevista": "2026-10-17 17:37:02"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "data_pedido": "2026-10-17 18:08:19",
+          "data_prevista": "2026-10-17 18:08:19"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2971,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de negócio para pedidos ativos e com recebimento pendente ou parcial, e a resposta final apresentou os dados de forma clara e totalmente fiel ao retorno do banco.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 993
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Tem algum pedido de compra com o recebimento em aberto?",
+      "tabelas": [
+        "purchase_order",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "res_partner",
+        "purchase_order_line",
+        "account_move_purchase_order_rel",
+        "stock_picking_type",
+        "stock_move"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.date_planned AS data_prevista, po.amount_total AS valor_total FROM public.purchase_order AS po JOIN public.res_partner AS rp ON rp.id = po.partner_id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Sim, existem pedidos de compra com o recebimento em aberto:\n\n1. **Pedido P00007**\n   - **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   - **Status do pedido:** Confirmado\n   - **Status do recebimento:** Parcial\n   - **Data prevista:** 10/10/2026\n   - **Valor total:** R$ 128.221,55\n\n2. **Pedido P00004**\n   - **Fornecedor:** Fornecedor-teste\n   - **Status do pedido:** Confirmado\n   - **Status do recebimento:** Pendente\n   - **Data prevista:** 17/10/2026\n   - **Valor total:** R$ 5.962,35\n\n3. **Pedido P00005**\n   - **Fornecedor:** ABB-teste\n   - **Status do pedido:** Confirmado\n   - **Status do recebimento:** Pendente\n   - **Data prevista:** 17/10/2026\n   - **Valor total:** R$ 12.120,00",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "status_faturamento": "to invoice",
+          "data_prevista": "2026-10-10 18:10:41",
+          "valor_total": "128221.55"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "data_prevista": "2026-10-17 17:37:02",
+          "valor_total": "5962.35"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "data_prevista": "2026-10-17 18:08:19",
+          "valor_total": "12120.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2834,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao escopo da pergunta utilizando as regras de negócio de status e recebimento, e a resposta final refletiu com exatidão e clareza os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 994
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Lista pra mim os pedidos que estão aguardando a chegada da mercadoria.",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.date_planned AS data_prevista, po.amount_total AS valor_total FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Aqui estão os pedidos que estão aguardando a chegada da mercadoria:\n\n1. **Pedido:** P00007\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status do pedido:** Confirmado\n   * **Status de recebimento:** Parcial\n   * **Data prevista:** 10/10/2026 18:10\n   * **Valor total:** R$ 128.221,55\n\n2. **Pedido:** P00004\n   * **Fornecedor:** Fornecedor-teste\n   * **Status do pedido:** Confirmado\n   * **Status de recebimento:** Pendente\n   * **Data prevista:** 17/10/2026 17:37\n   * **Valor total:** R$ 5.962,35\n\n3. **Pedido:** P00005\n   * **Fornecedor:** ABB-teste\n   * **Status do pedido:** Confirmado\n   * **Status de recebimento:** Pendente\n   * **Data prevista:** 17/10/2026 18:08\n   * **Valor total:** R$ 12.120,00",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "status_faturamento": "to invoice",
+          "data_prevista": "2026-10-10 18:10:41",
+          "valor_total": "128221.55"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "data_prevista": "2026-10-17 17:37:02",
+          "valor_total": "5962.35"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "data_prevista": "2026-10-17 18:08:19",
+          "valor_total": "12120.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2903,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de negócio para identificar pedidos aguardando recebimento (status ativos e receipt_status pending ou partial), e a resposta final refletiu fielmente todos os dados retornados de forma clara e organizada.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 837
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais ordens de compra ainda estão com status pendente de recebimento?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.date_order AS data_pedido, po.date_planned AS data_prevista FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Com base nos dados, as ordens de compra com status pendente ou parcial de recebimento são:\n\n1. **Pedido P00007**\n   - **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   - **Status do Pedido:** Confirmado\n   - **Status de Recebimento:** Parcial\n   - **Data Prevista:** 10/10/2026\n\n2. **Pedido P00004**\n   - **Fornecedor:** Fornecedor-teste\n   - **Status do Pedido:** Confirmado\n   - **Status de Recebimento:** Pendente\n   - **Data Prevista:** 17/10/2026\n\n3. **Pedido P00005**\n   - **Fornecedor:** ABB-teste\n   - **Status do Pedido:** Confirmado\n   - **Status de Recebimento:** Pendente\n   - **Data Prevista:** 17/10/2026",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial",
+          "status_faturamento": "to invoice",
+          "data_pedido": "2026-10-10 18:10:41",
+          "data_prevista": "2026-10-10 18:10:41"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "data_pedido": "2026-10-17 17:37:02",
+          "data_prevista": "2026-10-17 17:37:02"
+        },
+        {
+          "numero_pedido": "P00005",
+          "fornecedor": "ABB-teste",
+          "status_pedido": "purchase",
+          "status_recebimento": "pending",
+          "status_faturamento": "no",
+          "data_pedido": "2026-10-17 18:08:19",
+          "data_prevista": "2026-10-17 18:08:19"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2652,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de pedidos ativos e status de recebimento pendente/parcial, e a resposta final apresentou os dados de forma clara e totalmente fiel ao retorno.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 975
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "O que temos agendado para receber no dia de hoje?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "purchase_order",
+        "purchase_order_line",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT sp.name AS numero_recebimento, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, sm.product_uom_qty AS quantidade_demandada, sm.state AS status_movimento, sp.state AS status_recebimento, sp.scheduled_date AS data_prevista FROM stock_picking AS sp JOIN stock_picking_type AS spt ON sp.picking_type_id = spt.id JOIN res_partner AS rp ON sp.partner_id = rp.id JOIN stock_move AS sm ON sm.picking_id = sp.id JOIN product_product AS pp ON sm.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id WHERE spt.code = 'incoming' AND sp.state <> 'cancel' AND CAST((sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY sp.scheduled_date, sp.name, produto LIMIT 200",
+      "resposta": "Com base nos dados de hoje, temos os seguintes recebimentos agendados do fornecedor **JJMM ENTERPRISES L.L.C.**:\n\n* **Recebimento WH/IN/00004** (Data prevista: 10/10/2026 às 17:09) - Status: **concluído**\n  * 500.00 un. de *Capacitor Tantalum - Wurth*\n  * 100.00 un. de *Memoria RAM DDR5 32GB - Nvidia*\n  * 1500.00 un. de *Resistor 100k Ohm - Intel*\n\n* **Recebimento WH/IN/00007** (Data prevista: 10/10/2026 às 18:10) - Status: **concluído**\n  * 30.00 un. de *Capacitor Tantalum - Wurth*\n  * 50.00 un. de *Memoria RAM DDR5 32GB - Nvidia*\n  * 600.00 un. de *Resistor 100k Ohm - Intel*\n\n* **Recebimento WH/IN/00008** (Data prevista: 10/10/2026 às 18:10) - Status: **pronto para receber**\n  * 470.00 un. de *Capacitor Tantalum - Wurth*\n  * 50.00 un. de *Memoria RAM DDR5 32GB - Nvidia*\n  * 900.00 un. de *Resistor 100k Ohm - Intel*",
+      "linhas": 9,
+      "linhas_amostra": [
+        {
+          "numero_recebimento": "WH/IN/00004",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "quantidade_demandada": "500.00",
+          "status_movimento": "done",
+          "status_recebimento": "done",
+          "data_prevista": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_recebimento": "WH/IN/00004",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "quantidade_demandada": "100.00",
+          "status_movimento": "done",
+          "status_recebimento": "done",
+          "data_prevista": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_recebimento": "WH/IN/00004",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "quantidade_demandada": "1500.00",
+          "status_movimento": "done",
+          "status_recebimento": "done",
+          "data_prevista": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "quantidade_demandada": "30.00",
+          "status_movimento": "done",
+          "status_recebimento": "done",
+          "data_prevista": "2026-10-10 18:10:41"
+        },
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "quantidade_demandada": "50.00",
+          "status_movimento": "done",
+          "status_recebimento": "done",
+          "data_prevista": "2026-10-10 18:10:41"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3332,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atendeu perfeitamente ao escopo da pergunta aplicando as regras de fuso horário e filtros de recebimento incoming, e a resposta final refletiu rigorosamente as linhas retornadas com tradução adequada dos status técnicos.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1066
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais são as previsões de entrega para a data de hoje?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, pol.date_planned AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo' AS data_prevista, po.state AS status_pedido, po.receipt_status AS status_recebimento FROM public.purchase_order_line AS pol JOIN public.purchase_order AS po ON pol.order_id = po.id JOIN public.res_partner AS rp ON po.partner_id = rp.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE pol.display_type IS NULL AND po.state IN ('purchase') AND po.receipt_status IN ('pending', 'partial') AND (pol.product_qty - pol.qty_received) > 0 AND CAST((pol.date_planned AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY pol.date_planned ASC, rp.name ASC, po.name ASC LIMIT 200",
+      "resposta": "Com base nos dados consultados, há 3 previsões de entrega para hoje, todas referentes ao pedido **P00007** do fornecedor **JJMM ENTERPRISES L.L.C.** (status: confirmado, recebimento parcial):\n\n1. **Capacitor Tantalum - Wurth**\n   - Quantidade pedida: 500\n   - Quantidade recebida: 30\n   - Quantidade pendente: 470\n   - Data prevista: 10/10/2026 às 15:10\n\n2. **Resistor 100k Ohm - Intel**\n   - Quantidade pedida: 1.500\n   - Quantidade recebida: 600\n   - Quantidade pendente: 900\n   - Data prevista: 10/10/2026 às 15:10\n\n3. **Memoria RAM DDR5 32GB - Nvidia**\n   - Quantidade pedida: 100\n   - Quantidade recebida: 50\n   - Quantidade pendente: 50\n   - Data prevista: 10/10/2026 às 15:10",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "30.00",
+          "quantidade_pendente": "470.00",
+          "data_prevista": "2026-10-10 15:10:41",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "quantidade_pedida": "1500.00",
+          "quantidade_recebida": "600.00",
+          "quantidade_pendente": "900.00",
+          "data_prevista": "2026-10-10 15:10:41",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "quantidade_pedida": "100.00",
+          "quantidade_recebida": "50.00",
+          "quantidade_pendente": "50.00",
+          "data_prevista": "2026-10-10 15:10:41",
+          "status_pedido": "purchase",
+          "status_recebimento": "partial"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3255,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de fuso horário para a data de hoje, filtrou os pedidos confirmados com recebimento pendente/parcial e linhas ativas. A resposta apresentou os dados com fidelidade absoluta às linhas retornadas e clareza exemplar.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1047
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Tem alguma mercadoria programada para chegar hoje?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT sp.name AS numero_recebimento, sp.origin AS documento_origem, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, sm.product_uom_qty AS quantidade_demandada, sm.quantity AS quantidade_realizada, CASE WHEN sp.state = 'done' THEN 'Concluído' WHEN sp.state = 'assigned' THEN 'Pronto para conferência' WHEN sp.state = 'waiting' THEN 'Aguardando outra operação' WHEN sp.state = 'confirmed' THEN 'Aguardando disponibilidade' WHEN sp.state = 'draft' THEN 'Rascunho' ELSE sp.state END AS status, sp.scheduled_date AS data_programada FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON sp.picking_type_id = spt.id LEFT JOIN public.res_partner AS rp ON sp.partner_id = rp.id JOIN public.stock_move AS sm ON sm.picking_id = sp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE spt.code = 'incoming' AND sp.state <> 'cancel' AND CAST((sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY sp.scheduled_date, sp.name, pt.name LIMIT 200",
+      "resposta": "Sim, existem mercadorias programadas para chegar hoje (10/10/2026), divididas em três recebimentos do fornecedor **JJMM ENTERPRISES L.L.C.**:\n\n1. **Recebimento WH/IN/00004** (Doc. Origem: P00003) — **Status: Concluído**\n   * Capacitor Tantalum - Wurth: 500 un.\n   * Memória RAM DDR5 32GB - Nvidia: 100 un.\n   * Resistor 100k Ohm - Intel: 1.500 un.\n\n2. **Recebimento WH/IN/00007** (Doc. Origem: P00007) — **Status: Concluído**\n   * Capacitor Tantalum - Wurth: 30 un.\n   * Memória RAM DDR5 32GB - Nvidia: 50 un.\n   * Resistor 100k Ohm - Intel: 600 un.\n\n3. **Recebimento WH/IN/00008** (Doc. Origem: P00007) — **Status: Pronto para conferência**\n   * Capacitor Tantalum - Wurth: 470 un.\n   * Memória RAM DDR5 32GB - Nvidia: 50 un.\n   * Resistor 100k Ohm - Intel: 900 un.",
+      "linhas": 9,
+      "linhas_amostra": [
+        {
+          "numero_recebimento": "WH/IN/00004",
+          "documento_origem": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "quantidade_demandada": "500.00",
+          "quantidade_realizada": "500.00",
+          "status": "Concluído",
+          "data_programada": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_recebimento": "WH/IN/00004",
+          "documento_origem": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "quantidade_demandada": "100.00",
+          "quantidade_realizada": "100.00",
+          "status": "Concluído",
+          "data_programada": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_recebimento": "WH/IN/00004",
+          "documento_origem": "P00003",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "quantidade_demandada": "1500.00",
+          "quantidade_realizada": "1500.00",
+          "status": "Concluído",
+          "data_programada": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "quantidade_demandada": "30.00",
+          "quantidade_realizada": "30.00",
+          "status": "Concluído",
+          "data_programada": "2026-10-10 18:10:41"
+        },
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "quantidade_demandada": "50.00",
+          "quantidade_realizada": "50.00",
+          "status": "Concluído",
+          "data_programada": "2026-10-10 18:10:41"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3460,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A resposta utilizou corretamente todas as linhas retornadas, estruturou os dados com clareza em português e o SQL aplicou as regras de negócio e conversão de fuso horário de forma precisa.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1054
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Pode me passar a lista de entregas previstas para hoje?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "stock_move",
+        "res_partner"
+      ],
+      "sql": "SELECT sp.name AS numero_entrega, rp.name AS fornecedor, spt.code AS tipo_operacao, sp.state AS status_odoo, CASE WHEN sp.state = 'done' THEN 'concluido' ELSE 'pendente' END AS status, sp.scheduled_date AS data_prevista_utc FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON spt.id = sp.picking_type_id LEFT JOIN public.res_partner AS rp ON rp.id = sp.partner_id WHERE spt.code = 'incoming' AND sp.state <> 'cancel' AND CAST((sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY sp.scheduled_date ASC, sp.name ASC LIMIT 200",
+      "resposta": "Aqui está a lista de entregas previstas para hoje:\n\n1. **WH/IN/00004**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Concluído\n   * **Data Prevista:** 10/10/2026 às 17:09:46 (UTC)\n\n2. **WH/IN/00007**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Concluído\n   * **Data Prevista:** 10/10/2026 às 18:10:41 (UTC)\n\n3. **WH/IN/00008**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Pendente (Pronto para receber)\n   * **Data Prevista:** 10/10/2026 às 18:10:41 (UTC)",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_entrega": "WH/IN/00004",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "tipo_operacao": "incoming",
+          "status_odoo": "done",
+          "status": "concluido",
+          "data_prevista_utc": "2026-10-10 17:09:46"
+        },
+        {
+          "numero_entrega": "WH/IN/00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "tipo_operacao": "incoming",
+          "status_odoo": "done",
+          "status": "concluido",
+          "data_prevista_utc": "2026-10-10 18:10:41"
+        },
+        {
+          "numero_entrega": "WH/IN/00008",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "tipo_operacao": "incoming",
+          "status_odoo": "assigned",
+          "status": "pendente",
+          "data_prevista_utc": "2026-10-10 18:10:41"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2896,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atende perfeitamente à regra de negócio para 'entregas previstas para hoje' com o fuso horário correto e o status adequado, e a resposta final apresenta os dados retornados com clareza e precisão.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1134
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais itens apresentaram problemas na hora de dar entrada?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "purchase_order",
+        "purchase_order_line",
+        "stock_picking_type",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, sp.name AS numero_recebimento, sp.state AS status_recebimento, CASE WHEN sp.backorder_id IS NOT NULL THEN 'Recebimento Parcial (Backorder)' WHEN pol.qty_received < pol.product_qty THEN 'Quantidade Recebida Divergente da Pedida' ELSE 'Outra Divergencia' END AS tipo_divergencia, sp.date_done AS data_conclusao FROM stock_picking AS sp JOIN stock_picking_type AS spt ON spt.id = sp.picking_type_id JOIN res_partner AS rp ON rp.id = sp.partner_id JOIN stock_move AS sm ON sm.picking_id = sp.id JOIN purchase_order_line AS pol ON pol.id = sm.purchase_line_id JOIN purchase_order AS po ON po.id = pol.order_id JOIN product_product AS pp ON pp.id = sm.product_id JOIN product_template AS pt ON pt.id = pp.product_tmpl_id WHERE spt.code = 'incoming' AND pol.display_type IS NULL AND (sp.backorder_id IS NOT NULL OR pol.qty_received < pol.product_qty OR (sm.state = 'done' AND sm.quantity < sm.product_uom_qty)) ORDER BY sp.date_done DESC NULLS LAST, po.name LIMIT 200",
+      "resposta": "Com base nos dados apresentados, os seguintes itens apresentaram problemas (divergências ou recebimento parcial) na hora da entrada:\n\n1. **Pedido P00007** (Fornecedor: JJMM ENTERPRISES L.L.C.) — Recebimento `WH/IN/00007` (Concluído):\n   - **Capacitor Tantalum - Wurth** (SKU: CAP-27832): Pedido de 500, recebido 30 (Pendente: 470)\n   - **Memoria RAM DDR5 32GB - Nvidia** (SKU: MEM-10326): Pedido de 100, recebido 50 (Pendente: 50)\n   - **Resistor 100k Ohm - Intel** (SKU: RES-10317): Pedido de 1.500, recebido 600 (Pendente: 900)\n\n2. **Pedido P00004** (Fornecedor: Fornecedor-teste) — Recebimento `WH/IN/00005` (Pronto para receber):\n   - **Capacitor Electrolytic - AMD** (SKU: CAP-10422): Pedido de 5, recebido 0 (Pendente: 5)\n   - **Resistor 1k Ohm - Generic** (SKU: RES-10361): Pedido de 600, recebido 0 (Pendente: 600)\n   - **Capacitor 10uF - AMD** (SKU: CAP-10104): Pedido de 600, recebido 0 (Pendente: 600)\n\n3. **Pedido P00005** (Fornecedor: ABB-teste) — Recebimento `WH/IN/00006` (Pronto para receber):\n   - **Mouse Optical USB - Intel** (SKU: MOU-10566): Pedido de 500, recebido 0 (Pendente: 500)\n   - **Resistor 1M Ohm - Generic** (SKU: RES-10353): Pedido de 500, recebido 0 (Pendente: 500)\n   - **Resistor 10k Ohm - Wurth** (SKU: RES-10152): Pedido de 500, recebido 0 (Pendente: 500)\n   - **Teclado Mechanical Blue - Murata** (SKU: TEC-10134): Pedido de 500, recebido 0 (Pendente: 500)\n\n4. **Pedido P00007** (Fornecedor: JJMM ENTERPRISES L.L.C.) — Recebimento `WH/IN/00008` (Pronto para receber / Backorder):\n   - **Resistor 100k Ohm - Intel** (SKU: RES-10317): Pedido de 1.500, recebido 600 (Pendente: 900)\n   - **Capacitor Tantalum - Wurth** (SKU: CAP-27832): Pedido de 500, recebido 30 (Pendente: 470)\n   - **Memoria RAM DDR5 32GB - Nvidia** (SKU: MEM-10326): Pedido de 100, recebido 50 (Pendente: 50)",
+      "linhas": 13,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "sku": "CAP-27832",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "30.00",
+          "quantidade_pendente": "470.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Quantidade Recebida Divergente da Pedida",
+          "data_conclusao": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "sku": "MEM-10326",
+          "quantidade_pedida": "100.00",
+          "quantidade_recebida": "50.00",
+          "quantidade_pendente": "50.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Quantidade Recebida Divergente da Pedida",
+          "data_conclusao": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "sku": "RES-10317",
+          "quantidade_pedida": "1500.00",
+          "quantidade_recebida": "600.00",
+          "quantidade_pendente": "900.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Quantidade Recebida Divergente da Pedida",
+          "data_conclusao": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Capacitor Electrolytic - AMD",
+          "sku": "CAP-10422",
+          "quantidade_pedida": "5.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "5.00",
+          "numero_recebimento": "WH/IN/00005",
+          "status_recebimento": "assigned",
+          "tipo_divergencia": "Quantidade Recebida Divergente da Pedida",
+          "data_conclusao": null
+        },
+        {
+          "numero_pedido": "P00004",
+          "fornecedor": "Fornecedor-teste",
+          "produto": "Resistor 1k Ohm - Generic",
+          "sku": "RES-10361",
+          "quantidade_pedida": "600.00",
+          "quantidade_recebida": "0.00",
+          "quantidade_pendente": "600.00",
+          "numero_recebimento": "WH/IN/00005",
+          "status_recebimento": "assigned",
+          "tipo_divergencia": "Quantidade Recebida Divergente da Pedida",
+          "data_conclusao": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 4315,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL atende perfeitamente à regra de negócio de divergências de recebimento e a resposta apresenta os dados com clareza e fidelidade às linhas retornadas.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1199
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Houve alguma divergência de material registrada no recebimento?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "stock_picking_type",
+        "res_partner",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT sp.name AS numero_recebimento, sp.origin AS documento_origem, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, sm.product_uom_qty AS quantidade_demandada, sm.quantity AS quantidade_realizada, CASE WHEN sp.backorder_id IS NOT NULL THEN 'Recebimento Parcial (Backorder)' WHEN sm.quantity <> sm.product_uom_qty THEN 'Divergencia de Quantidade no Movimento' WHEN pol.qty_received <> pol.product_qty THEN 'Divergencia entre Pedido e Recebido' ELSE 'Outra Divergencia' END AS tipo_divergencia, sp.date_done AS data_conclusao, sp.state AS status_recebimento FROM stock_picking AS sp JOIN stock_picking_type AS spt ON sp.picking_type_id = spt.id JOIN res_partner AS rp ON sp.partner_id = rp.id JOIN stock_move AS sm ON sm.picking_id = sp.id JOIN product_product AS pp ON sm.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN purchase_order_line AS pol ON sm.purchase_line_id = pol.id WHERE spt.code = 'incoming' AND (sp.backorder_id IS NOT NULL OR (sm.state = 'done' AND sm.quantity <> sm.product_uom_qty) OR (pol.id IS NOT NULL AND pol.qty_received <> pol.product_qty AND sp.state = 'done')) ORDER BY sp.date_done DESC NULLS LAST, sp.name LIMIT 200",
+      "resposta": "Sim, houve divergências registradas nos recebimentos do fornecedor **JJMM ENTERPRISES L.L.C.** (documento de origem **P00007**):\n\n1. **Recebimento WH/IN/00007 (Concluído em 10/10/2026):**\n   * Apresentou **Divergência entre Pedido e Recebido** para os seguintes produtos (embora a quantidade demandada e realizada tenha sido a mesma por item):\n     * **Capacitor Tantalum - Wurth** (SKU: CAP-27832) - 30 unidades.\n     * **Resistor 100k Ohm - Intel** (SKU: RES-10317) - 600 unidades.\n     * **Memoria RAM DDR5 32GB - Nvidia** (SKU: MEM-10326) - 50 unidades.\n\n2. **Recebimento WH/IN/00008 (Status: pronto para receber):**\n   * Registrado como **Recebimento Parcial (Backorder)** vinculado ao mesmo pedido de origem para os mesmos três produtos, com pendências de quantidades maiores (470 unidades de capacitor, 900 de resistor e 50 de memória).",
+      "linhas": 6,
+      "linhas_amostra": [
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "sku": "CAP-27832",
+          "quantidade_demandada": "30.00",
+          "quantidade_realizada": "30.00",
+          "tipo_divergencia": "Divergencia entre Pedido e Recebido",
+          "data_conclusao": "2026-10-10 18:12:34",
+          "status_recebimento": "done"
+        },
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "sku": "RES-10317",
+          "quantidade_demandada": "600.00",
+          "quantidade_realizada": "600.00",
+          "tipo_divergencia": "Divergencia entre Pedido e Recebido",
+          "data_conclusao": "2026-10-10 18:12:34",
+          "status_recebimento": "done"
+        },
+        {
+          "numero_recebimento": "WH/IN/00007",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "sku": "MEM-10326",
+          "quantidade_demandada": "50.00",
+          "quantidade_realizada": "50.00",
+          "tipo_divergencia": "Divergencia entre Pedido e Recebido",
+          "data_conclusao": "2026-10-10 18:12:34",
+          "status_recebimento": "done"
+        },
+        {
+          "numero_recebimento": "WH/IN/00008",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Capacitor Tantalum - Wurth",
+          "sku": "CAP-27832",
+          "quantidade_demandada": "470.00",
+          "quantidade_realizada": "470.00",
+          "tipo_divergencia": "Recebimento Parcial (Backorder)",
+          "data_conclusao": null,
+          "status_recebimento": "assigned"
+        },
+        {
+          "numero_recebimento": "WH/IN/00008",
+          "documento_origem": "P00007",
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "produto": "Resistor 100k Ohm - Intel",
+          "sku": "RES-10317",
+          "quantidade_demandada": "900.00",
+          "quantidade_realizada": "900.00",
+          "tipo_divergencia": "Recebimento Parcial (Backorder)",
+          "data_conclusao": null,
+          "status_recebimento": "assigned"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3559,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.0,
+        "notas": {
+          "fidelidade": 3,
+          "aderencia": 5,
+          "sql": 4,
+          "clareza": 4
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "O CASE WHEN categorizou as linhas do recebimento WH/IN/00007 como 'Divergencia entre Pedido e Recebido' mesmo com quantidade demandada igual à realizada, indicando que a condição pol.qty_received <> pol.product_qty pode ter sido satisfeita por outra linha do pedido e não pelo item individual."
+        ],
+        "sugestao": "Refinar a lógica de divergência entre pedido e recebido no SQL comparando a quantidade do movimento com a linha do pedido (ex: sm.quantity <> pol.product_qty) ou agregando os totais.",
+        "justificativa": "A resposta relata uma divergência para o recebimento WH/IN/00007 baseada no SQL, mas os dados mostram que quantidade demandada e realizada são iguais, evidenciando uma falha na premissa da regra no CASE WHEN.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1627
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Pode me listar quais produtos vieram com diferença no momento da conferência?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "stock_picking_type",
+        "res_partner",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT sp.name AS numero_recebimento, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, sm.product_uom_qty AS quantidade_planejada, sm.quantity AS quantidade_realizada, (sm.product_uom_qty - sm.quantity) AS diferenca, sp.state AS status_recebimento, sp.date_done AS data_conclusao FROM public.stock_move AS sm JOIN public.stock_picking AS sp ON sm.picking_id = sp.id JOIN public.stock_picking_type AS spt ON sp.picking_type_id = spt.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN public.res_partner AS rp ON sp.partner_id = rp.id WHERE spt.code = 'incoming' AND sm.state = 'done' AND sm.quantity <> sm.product_uom_qty ORDER BY sp.date_done DESC NULLS LAST LIMIT 200",
+      "resposta": "Nenhum produto veio com diferença no momento da conferência para os recebimentos concluídos.",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2363,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 4.75,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 4,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [
+          "O SQL utilizou apenas o critério (sm.quantity <> sm.product_uom_qty) na tabela stock_move, o que pode falhar em detectar divergências por falta parcial onde o Odoo ajusta a demanda original do movimento, conforme alertado nas regras de negócio."
+        ],
+        "sugestao": "Incluir no filtro do SQL as outras condições descritas nas regras para divergência de recebimento, como stock_picking.backorder_id IS NOT NULL ou comparação com purchase_order_line.",
+        "justificativa": "A resposta e o resultado estão estritamente alinhados com o retorno vazio da consulta SQL executada, embora o SQL pudesse ser mais abrangente conforme as regras de negócio de divergência.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1362
+      }
+    },
+    {
+      "grupo": "acompanhamento",
+      "numero_sorteado": null,
+      "pergunta": "Quais foram os materiais que deram divergência ao serem recebidos?",
+      "tabelas": [
+        "stock_move",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "purchase_order",
+        "uom_uom"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_divergente, sp.name AS numero_recebimento, sp.state AS status_recebimento, CASE WHEN sp.backorder_id IS NOT NULL THEN 'Recebimento parcial com backorder' WHEN pol.qty_received < pol.product_qty THEN 'Recebimento inferior ao pedido' ELSE 'Divergencia de quantidade' END AS tipo_divergencia, sp.date_done AS data_recebimento FROM public.stock_move AS sm JOIN public.stock_picking AS sp ON sm.picking_id = sp.id JOIN public.purchase_order_line AS pol ON sm.purchase_line_id = pol.id JOIN public.purchase_order AS po ON pol.order_id = po.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE pol.display_type IS NULL AND sp.state = 'done' AND (sp.backorder_id IS NOT NULL OR pol.qty_received <> pol.product_qty) ORDER BY sp.date_done DESC NULLS LAST, po.name, produto LIMIT 200",
+      "resposta": "Com base nos dados recebidos, os seguintes materiais apresentaram divergência (quantidade recebida inferior à pedida) no recebimento `WH/IN/00007` referente ao pedido `P00007` (concluído em 10/10/2026):\n\n1. **Capacitor Tantalum - Wurth** (SKU: CAP-27832)\n   - **Quantidade pedida:** 500\n   - **Quantidade recebida:** 30\n   - **Divergência:** 470 a menos\n\n2. **Memoria RAM DDR5 32GB - Nvidia** (SKU: MEM-10326)\n   - **Quantidade pedida:** 100\n   - **Quantidade recebida:** 50\n   - **Divergência:** 50 a menos\n\n3. **Resistor 100k Ohm - Intel** (SKU: RES-10317)\n   - **Quantidade pedida:** 1.500\n   - **Quantidade recebida:** 600\n   - **Divergência:** 900 a menos",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "numero_pedido": "P00007",
+          "produto": "Capacitor Tantalum - Wurth",
+          "sku": "CAP-27832",
+          "quantidade_pedida": "500.00",
+          "quantidade_recebida": "30.00",
+          "quantidade_divergente": "470.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Recebimento inferior ao pedido",
+          "data_recebimento": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "produto": "Memoria RAM DDR5 32GB - Nvidia",
+          "sku": "MEM-10326",
+          "quantidade_pedida": "100.00",
+          "quantidade_recebida": "50.00",
+          "quantidade_divergente": "50.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Recebimento inferior ao pedido",
+          "data_recebimento": "2026-10-10 18:12:34"
+        },
+        {
+          "numero_pedido": "P00007",
+          "produto": "Resistor 100k Ohm - Intel",
+          "sku": "RES-10317",
+          "quantidade_pedida": "1500.00",
+          "quantidade_recebida": "600.00",
+          "quantidade_divergente": "900.00",
+          "numero_recebimento": "WH/IN/00007",
+          "status_recebimento": "done",
+          "tipo_divergencia": "Recebimento inferior ao pedido",
+          "data_recebimento": "2026-10-10 18:12:34"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3595,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de negócio para divergência de recebimento, e a resposta final apresentou os dados de forma clara e totalmente fiel ao resultado retornado.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 941
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais materiais críticos estão pendentes de recebimento e podem impactar a produção?",
+      "tabelas": [
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "stock_move",
+        "stock_picking_type",
+        "mrp_production",
+        "purchase_order",
+        "purchase_order_line",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT pp.default_code AS codigo_material, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS nome_material, mrp.name AS ordem_producao, sm.product_uom_qty AS quantidade_necessaria_op, po.name AS pedido_compra, rp.name AS fornecedor, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, po.date_planned AS data_prevista_entrega FROM stock_move AS sm JOIN mrp_production AS mrp ON sm.raw_material_production_id = mrp.id JOIN product_product AS pp ON sm.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id JOIN purchase_order_line AS pol ON pol.product_id = pp.id JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id WHERE sm.raw_material_production_id IS NOT NULL AND NOT sm.state IN ('assigned', 'done', 'cancel') AND mrp.state IN ('confirmed', 'progress', 'to_close') AND pol.display_type IS NULL AND po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') AND pol.product_qty > pol.qty_received ORDER BY po.date_planned ASC, mrp.name ASC, nome_material ASC LIMIT 200",
+      "resposta": "Nenhum material crítico com pedido de compra pendente ou parcialmente recebido foi encontrado para as ordens de produção em andamento.",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3142,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.5,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": false,
+        "problemas": [
+          "O JOIN entre stock_move e purchase_order_line foi feito apenas por product_id (pol.product_id = pp.id), sem correlacionar com a Ordem de Produção ou demanda específica, o que gera um produto cartesiano ou associa compras erradas aos componentes das OPs.",
+          "Filtros restritivos em purchase_order (receipt_status IN ('pending', 'partial')) combinados com o JOIN incorreto reduzem a probabilidade de retorno a zero."
+        ],
+        "sugestao": "Para cruzar componentes de OP com pedidos de compra, deve-se utilizar a lógica de necessidades / planejamento do MRP ou ligar por requisições/origem, já que o stock_move de um componente de OP (raw_material_production_id) não aponta diretamente para uma linha de compra (purchase_line_id).",
+        "justificativa": "A resposta reflete corretamente o resultado obtido do SQL, mas a consulta SQL falha estruturalmente ao tentar cruzar componentes de OPs com linhas de compra baseando-se apenas no ID do produto, resultando em um conjunto vazio inverossímil.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1513
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais fornecedores apresentam maior índice de atraso nas entregas?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "purchase_order_line",
+        "account_move_purchase_order_rel",
+        "stock_picking_type",
+        "stock_move"
+      ],
+      "sql": "SELECT rp.name AS fornecedor, rp.vat AS cnpj, COUNT(po.id) AS total_pedidos_ativos, SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status <> 'full') THEN 1 ELSE 0 END) AS pedidos_atrasados, ROUND((CAST(SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status <> 'full') THEN 1 ELSE 0 END) AS DECIMAL) / NULLIF(COUNT(po.id), 0)) * 100, 2) AS indice_atraso_percentual FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') GROUP BY rp.id, rp.name, rp.vat HAVING COUNT(po.id) > 0 ORDER BY indice_atraso_percentual DESC, total_pedidos_ativos DESC LIMIT 20",
+      "resposta": "Com base nos dados fornecidos, o fornecedor com maior índice de atraso nas entregas é a **JJMM ENTERPRISES L.L.C.** (CNPJ: `dd2e23216641d3as`), apresentando um índice de atraso de **100,00%** (4 pedidos atrasados em um total de 4 pedidos).\n\nOs demais fornecedores listados (**ABB-teste** e **Fornecedor-teste**) apresentam 0% de índice de atraso.",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "cnpj": "dd2e23216641d3as",
+          "total_pedidos_ativos": 4,
+          "pedidos_atrasados": 4,
+          "indice_atraso_percentual": "100.00"
+        },
+        {
+          "fornecedor": "ABB-teste",
+          "cnpj": null,
+          "total_pedidos_ativos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        },
+        {
+          "fornecedor": "Fornecedor-teste",
+          "cnpj": null,
+          "total_pedidos_ativos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2886,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente a regra de negócio para cálculo do índice de atraso de fornecedores, e a resposta final utilizou fielmente apenas os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1043
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Qual o lead time médio entre a chegada do material e a conclusão do recebimento?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "stock_picking_type",
+        "res_partner",
+        "product_product",
+        "product_template",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT AVG(sp.date_done - sp.scheduled_date) AS lead_time_medio, AVG(EXTRACT(EPOCH FROM (sp.date_done - sp.scheduled_date)) / 3600) AS lead_time_medio_horas FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON sp.picking_type_id = spt.id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND sp.scheduled_date IS NOT NULL LIMIT 200",
+      "resposta": "O lead time médio entre a chegada do material e a conclusão do recebimento (para os recebimentos com status concluído) é de aproximadamente 5 dias e 6 horas (ou 126,15 horas).",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "lead_time_medio": "5 days, 6:09:09.600000",
+          "lead_time_medio_horas": "126.15266666666666666445"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2437,
+      "validacao": {
+        "veredito": "reprovada",
+        "nota_media": 2.75,
+        "notas": {
+          "fidelidade": 2,
+          "aderencia": 3,
+          "sql": 2,
+          "clareza": 4
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "A regra de negócio define explicitamente que o lead time de recebimento deve ser calculado como stock_picking.date_done - stock_picking.create_date.",
+          "O SQL utilizou scheduled_date em vez de create_date, medindo a diferença entre a data planejada e a data de conclusão, o que difere da pergunta e da regra de negócio (chegada do material vs conclusão)."
+        ],
+        "sugestao": "Ajustar o cálculo no SQL para utilizar (sp.date_done - sp.create_date) em conformidade com o glossário de regras de negócio.",
+        "justificativa": "A resposta reflete corretamente o resultado retornado pelo SQL, mas o SQL calculou o lead time usando scheduled_date em vez de create_date, violando a regra de negócio específica para 'lead time de recebimento'.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1221
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais pedidos possuem risco de impactar ordens de produção devido à falta de material?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_move",
+        "mrp_production",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, mp.name AS ordem_producao, mp.state AS status_op, sm.product_uom_qty AS qtd_demanda_op, pol.product_qty AS qtd_pedido, pol.qty_received AS qtd_recebida, (pol.product_qty - pol.qty_received) AS qtd_pendente, po.date_planned AS data_prevista_pedido FROM public.stock_move AS sm JOIN public.mrp_production AS mp ON sm.raw_material_production_id = mp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id JOIN public.purchase_order_line AS pol ON pol.product_id = sm.product_id AND pol.display_type IS NULL JOIN public.purchase_order AS po ON pol.order_id = po.id JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE mp.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') AND po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') ORDER BY mp.date_start ASC, po.date_planned ASC LIMIT 200",
+      "resposta": "Nenhum pedido com saldo a receber foi encontrado para os critérios buscados (pedidos vinculados a ordens de produção ativas com falta de material).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2996,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.5,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [
+          "O JOIN entre stock_move (material da OP) e purchase_order_line é feito apenas por product_id, sem ligar ao documento de compra específico ou ao contexto do pedido, o que pode gerar combinações incorretas caso haja múltiplos pedidos para o mesmo produto."
+        ],
+        "sugestao": "Refinar o cruzamento entre stock_move e purchase_order_line utilizando o campo purchase_line_id em stock_move ou garantindo que o pedido atenda diretamente à demanda da OP.",
+        "justificativa": "A consulta executou sem erros e retornou vazio de forma plausível (não há registros cruzando todas as condições estritas), mas o JOIN puramente por produto entre OPs e linhas de compra pode ser impreciso.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1270
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Tem algum item crítico atrasado que possa parar a linha de produção?",
+      "tabelas": [
+        "mrp_production",
+        "stock_move",
+        "stock_picking",
+        "product_product",
+        "product_template",
+        "purchase_order_line",
+        "stock_picking_type",
+        "res_partner"
+      ],
+      "sql": "SELECT op.name AS ordem_producao, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto_critico, pp.default_code AS sku, sm.product_uom_qty AS quantidade_necessaria, sm.state AS status_reserva_componente, op.date_start AS inicio_planejado_op, rp.name AS fornecedor, pol.name AS pedido_compra, pol.date_planned AS data_prevista_compra, (pol.product_qty - pol.qty_received) AS quantidade_pendente_compra FROM public.stock_move AS sm JOIN public.mrp_production AS op ON sm.raw_material_production_id = op.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN public.purchase_order_line AS pol ON pol.product_id = pp.id AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty LEFT JOIN public.res_partner AS rp ON pol.partner_id = rp.id WHERE op.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') AND op.date_start < CURRENT_TIMESTAMP ORDER BY op.date_start ASC, op.name ASC LIMIT 200",
+      "resposta": "Não há itens críticos atrasados que possam parar a linha de produção (nenhuma ordem de produção em andamento com componentes não reservados e data de início anterior ao momento atual).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3001,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta executou corretamente seguindo a regra de negócio para material crítico de produção e o resultado vazio é perfeitamente plausível, sendo interpretado de forma clara e direta na resposta ao usuário.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 947
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais insumos essenciais não chegaram ainda e trazem risco de impacto produtivo?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "stock_picking_type",
+        "mrp_production",
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, mrp.name AS ordem_producao, mrp.state AS status_op, sm.product_uom_qty AS quantidade_necessaria, pol.qty_received AS quantidade_recebida, (sm.product_uom_qty - COALESCE(pol.qty_received, 0)) AS quantidade_pendente, po.name AS pedido_compra, rp.name AS fornecedor, po.date_planned AS data_prevista_pedido FROM public.stock_move AS sm JOIN public.mrp_production AS mrp ON sm.raw_material_production_id = mrp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN public.purchase_order_line AS pol ON pol.product_id = sm.product_id AND pol.display_type IS NULL LEFT JOIN public.purchase_order AS po ON pol.order_id = po.id AND po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') LEFT JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE sm.raw_material_production_id IS NOT NULL AND NOT sm.state IN ('assigned', 'done', 'cancel') AND mrp.state IN ('confirmed', 'progress', 'to_close') AND pp.active = TRUE ORDER BY mrp.date_start ASC, pt.name ->> 'pt_BR' ASC LIMIT 200",
+      "resposta": "Nenhum resultado foi encontrado para a busca por insumos essenciais pendentes vinculados a ordens de produção ativas (nenhum pedido com saldo a receber).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2827,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.5,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [
+          "O LEFT JOIN com purchase_order_line puramente por product_id, sem vincular ao pedido ou ao contexto da OP/demanda, pode trazer linhas de compra incorretas ou duplicadas caso haja múltiplos pedidos para o mesmo produto."
+        ],
+        "sugestao": "Para cruzar componentes de OP com pedidos de compra, idealmente deve-se verificar se a linha do pedido cobre a demanda (por exemplo, por data ou cruzando com requisicoes/pedidos abertos do item), ou utilizar subconsultas para evitar cartesianos e associações incorretas.",
+        "justificativa": "O SQL retornou vazio de forma plausível (não há registros atendendo a todos os filtros restritivos), mas a lógica de join com purchase_order_line apenas por product_id é frágil no Odoo.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1716
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais materiais importantes faltam dar entrada e ameaçam o cronograma da fábrica?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "mrp_production",
+        "stock_picking_type",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom"
+      ],
+      "sql": "SELECT COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, mp.name AS ordem_producao, sm.product_uom_qty AS quantidade_necessaria, sm.state AS status_reserva_componente, po.name AS pedido_compra, po.date_planned AS data_prevista_pedido, rp.name AS fornecedor FROM public.stock_move AS sm JOIN public.mrp_production AS mp ON sm.raw_material_production_id = mp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN public.purchase_order_line AS pol ON pol.product_id = pp.id AND pol.display_type IS NULL LEFT JOIN public.purchase_order AS po ON pol.order_id = po.id AND po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') LEFT JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE sm.raw_material_production_id IS NOT NULL AND NOT sm.state IN ('assigned', 'done', 'cancel') AND mp.state IN ('confirmed', 'progress', 'to_close') ORDER BY mp.date_start ASC, sm.product_uom_qty DESC LIMIT 200",
+      "resposta": "Nenhum material com falta de entrada ameaça o cronograma no momento (o resultado da busca está vazio para componentes de ordens de produção em aberto que ainda não estão reservados ou concluídos).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3028,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 4.75,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 4,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [],
+        "sugestao": "O JOIN entre stock_move e purchase_order_line foi feito apenas por product_id, o que pode trazer pedidos de compra incorretos se houver múltiplos pedidos para o mesmo produto; o ideal seria ligar via estoque/necessidades se aplicável, mas o resultado vazio é plausível por falta de dados reais.",
+        "justificativa": "A resposta interpretou corretamente o resultado vazio da consulta, mantendo total fidelidade aos dados retornados sem inventar informações.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1085
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Existe algum componente crítico pendente que possa travar a nossa produção?",
+      "tabelas": [
+        "mrp_production",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT op.name AS ordem_producao, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto_componente, pp.default_code AS codigo_componente, sm.product_uom_qty AS quantidade_necessaria, sm.state AS status_movimento, op.state AS status_op FROM public.stock_move AS sm JOIN public.mrp_production AS op ON sm.raw_material_production_id = op.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE op.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') AND pp.active = TRUE ORDER BY op.date_start ASC, op.name ASC LIMIT 200",
+      "resposta": "O resultado da busca está vazio: nenhum componente crítico pendente foi encontrado para Ordens de Produção confirmadas, em andamento ou a fechar.",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2602,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A pergunta foi respondida de forma clara e objetiva com base em um SQL perfeitamente alinhado às regras de negócio para componentes críticos de OPs. Como o banco não retornou registros, o resultado vazio é plausível e indica que não há componentes em falta nas condições especificadas.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 947
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais são os fornecedores que mais atrasam as mercadorias?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "stock_move",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "purchase_order_line",
+        "account_move_purchase_order_rel",
+        "product_product",
+        "product_template",
+        "stock_picking_type"
+      ],
+      "sql": "SELECT rp.name AS fornecedor, COUNT(po.id) AS total_pedidos_ativos, SUM(CASE WHEN po.effective_date > po.date_planned OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status <> 'full') THEN 1 ELSE 0 END) AS pedidos_atrasados, ROUND((CAST(SUM(CASE WHEN po.effective_date > po.date_planned OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status <> 'full') THEN 1 ELSE 0 END) AS DECIMAL) / NULLIF(COUNT(po.id), 0)) * 100, 2) AS indice_atraso_percentual FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') GROUP BY rp.id, rp.name HAVING COUNT(po.id) > 0 ORDER BY pedidos_atrasados DESC, indice_atraso_percentual DESC LIMIT 10",
+      "resposta": "Com base nos dados obtidos, os fornecedores que mais apresentam atrasos nas entregas são:\n\n1. **JJMM ENTERPRISES L.L.C.**: 4 pedidos atrasados (100% de índice de atraso em seus 4 pedidos confirmados/concluídos).\n2. **ABB-teste**: 0 pedidos atrasados (0% em 1 pedido).\n3. **Fornecedor-teste**: 0 pedidos atrasados (0% em 1 pedido).",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "total_pedidos_ativos": 4,
+          "pedidos_atrasados": 4,
+          "indice_atraso_percentual": "100.00"
+        },
+        {
+          "fornecedor": "ABB-teste",
+          "total_pedidos_ativos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        },
+        {
+          "fornecedor": "Fornecedor-teste",
+          "total_pedidos_ativos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3225,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 4.75,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 4
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "A resposta final incluiu fornecedores com 0% de atraso, embora a pergunta fosse 'quais são os fornecedores que mais atrasam', o que poluiu um pouco o foco principal."
+        ],
+        "sugestao": "Filtrar ou destacar apenas os fornecedores com pedidos atrasados na resposta final.",
+        "justificativa": "A consulta SQL e os cálculos estão corretos e fiéis às regras de atraso definidas, mas a apresentação da resposta poderia filtrar os que não têm atraso.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1371
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Qual é o ranking de fornecedores com o pior prazo de entrega?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT rp.name AS fornecedor, COUNT(po.id) AS total_pedidos, SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status IN ('pending', 'partial')) THEN 1 ELSE 0 END) AS pedidos_atrasados, ROUND(CAST(100.0 * SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status IN ('pending', 'partial')) THEN 1 ELSE 0 END) / NULLIF(COUNT(po.id), 0) AS DECIMAL), 2) AS indice_atraso_percentual FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') GROUP BY rp.id, rp.name ORDER BY indice_atraso_percentual DESC, total_pedidos DESC LIMIT 50",
+      "resposta": "Com base nos dados, aqui está o ranking dos fornecedores com o pior prazo de entrega (ordenados pelo índice de atraso percentual e total de pedidos):\n\n1. **JJMM ENTERPRISES L.L.C.** - 100,00% de índice de atraso (4 pedidos no total, sendo 4 atrasados).\n2. **ABB-teste** - 0,00% de índice de atraso (1 pedido no total, 0 atrasados).\n3. **Fornecedor-teste** - 0,00% de índice de atraso (1 pedido no total, 0 atrasados).",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "total_pedidos": 4,
+          "pedidos_atrasados": 4,
+          "indice_atraso_percentual": "100.00"
+        },
+        {
+          "fornecedor": "ABB-teste",
+          "total_pedidos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        },
+        {
+          "fornecedor": "Fornecedor-teste",
+          "total_pedidos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2750,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "O SQL aplicou corretamente a regra de negócio para cálculo de atraso por pedido e índice percentual, e a resposta final refletiu com precisão os dados retornados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 908
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quem são os parceiros comerciais com maior histórico de atrasos no recebimento?",
+      "tabelas": [
+        "res_partner",
+        "purchase_order",
+        "stock_picking",
+        "purchase_order_stock_picking_rel",
+        "purchase_order_line",
+        "account_move_purchase_order_rel",
+        "stock_picking_type",
+        "stock_move"
+      ],
+      "sql": "SELECT rp.name AS fornecedor, rp.vat AS cnpj, COUNT(po.id) AS total_pedidos_ativos, COUNT(CASE WHEN (po.effective_date IS NOT NULL AND po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status IN ('pending', 'partial')) THEN 1 END) AS pedidos_atrasados, ROUND(CAST(COUNT(CASE WHEN (po.effective_date IS NOT NULL AND po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status IN ('pending', 'partial')) THEN 1 END) * 100.0 / NULLIF(COUNT(po.id), 0) AS DECIMAL), 2) AS indice_atraso_percentual FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') GROUP BY rp.id, rp.name, rp.vat HAVING COUNT(po.id) > 0 ORDER BY pedidos_atrasados DESC, indice_atraso_percentual DESC LIMIT 10",
+      "resposta": "Com base nos dados, os parceiros comerciais com maior histórico de atrasos no recebimento são:\n\n1. **JJMM ENTERPRISES L.L.C.** (CNPJ: `dd2e23216641d3as`): 4 pedidos ativos, sendo todos os 4 atrasados (100% de índice de atraso).\n2. **ABB-teste**: 1 pedido ativo e nenhum atraso (0%).\n3. **Fornecedor-teste**: 1 pedido ativo e nenhum atraso (0%).",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "cnpj": "dd2e23216641d3as",
+          "total_pedidos_ativos": 4,
+          "pedidos_atrasados": 4,
+          "indice_atraso_percentual": "100.00"
+        },
+        {
+          "fornecedor": "ABB-teste",
+          "cnpj": null,
+          "total_pedidos_ativos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        },
+        {
+          "fornecedor": "Fornecedor-teste",
+          "cnpj": null,
+          "total_pedidos_ativos": 1,
+          "pedidos_atrasados": 0,
+          "indice_atraso_percentual": "0.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2545,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta SQL aplicou corretamente as regras de negócio para calcular o atraso por pedido, o agrupamento por parceiro e o índice percentual. A resposta final reflete fielmente os dados retornados sem extrapolações.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 908
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Pode me mostrar quais empresas têm a taxa mais alta de entregas fora do prazo?",
+      "tabelas": [
+        "purchase_order",
+        "res_partner",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT rp.name AS fornecedor, COUNT(po.id) AS total_pedidos, SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status <> 'full') THEN 1 ELSE 0 END) AS pedidos_atrasados, ROUND(CAST(100.0 * SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < CURRENT_TIMESTAMP AND po.receipt_status <> 'full') THEN 1 ELSE 0 END) / NULLIF(COUNT(po.id), 0) AS DECIMAL), 2) AS taxa_atraso_percentual FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') GROUP BY rp.id, rp.name ORDER BY taxa_atraso_percentual DESC, total_pedidos DESC LIMIT 10",
+      "resposta": "Com base nos dados obtidos, aqui estão as empresas com as maiores taxas de entregas fora do prazo:\n\n1. **JJMM ENTERPRISES L.L.C.** — Taxa de atraso de **100,00%** (4 de 4 pedidos atrasados).\n2. **ABB-teste** — Taxa de atraso de **0,00%** (0 de 1 pedido atrasado).\n3. **Fornecedor-teste** — Taxa de atraso de **0,00%** (0 de 1 pedido atrasado).",
+      "linhas": 3,
+      "linhas_amostra": [
+        {
+          "fornecedor": "JJMM ENTERPRISES L.L.C.",
+          "total_pedidos": 4,
+          "pedidos_atrasados": 4,
+          "taxa_atraso_percentual": "100.00"
+        },
+        {
+          "fornecedor": "ABB-teste",
+          "total_pedidos": 1,
+          "pedidos_atrasados": 0,
+          "taxa_atraso_percentual": "0.00"
+        },
+        {
+          "fornecedor": "Fornecedor-teste",
+          "total_pedidos": 1,
+          "pedidos_atrasados": 0,
+          "taxa_atraso_percentual": "0.00"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2618,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A resposta utiliza rigorosamente apenas as linhas retornadas, aplicando a lógica de atraso descrita nas regras de negócio e apresentando um SQL correto e coerente.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 945
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quanto tempo, em média, levamos desde que a mercadoria chega até a nota dar entrada no sistema?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "account_move",
+        "purchase_order",
+        "purchase_order_line",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "stock_move",
+        "res_partner",
+        "product_product",
+        "product_template",
+        "uom_uom"
+      ],
+      "sql": "SELECT AVG(am.create_date - sp.date_done) AS tempo_medio_recebimento_ate_nf FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON spt.id = sp.picking_type_id JOIN public.purchase_order_stock_picking_rel AS pospr ON pospr.stock_picking_id = sp.id JOIN public.purchase_order AS po ON po.id = pospr.purchase_order_id JOIN public.account_move_purchase_order_rel AS amor ON amor.purchase_order_id = po.id JOIN public.account_move AS am ON am.id = amor.account_move_id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND am.move_type = 'in_invoice' AND am.state <> 'cancel' AND am.create_date >= sp.date_done LIMIT 200",
+      "resposta": "O resultado da consulta retornou vazio (valor nulo), indicando que não foram encontrados registros para o critério buscado: o tempo médio entre a conclusão do recebimento da mercadoria (transferência concluída) e a data de criação da fatura de entrada no sistema.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "tempo_medio_recebimento_ate_nf": null
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2687,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.5,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [
+          "O filtro am.create_date >= sp.date_done assume que a NF é sempre criada APÓS o recebimento da mercadoria, o que pode mascarar ou zerar resultados se houver emissão prévia da NF, resultando em um retorno nulo."
+        ],
+        "sugestao": "Remover o filtro am.create_date >= sp.date_done (ou usar ABS / permitir datas anteriores) para calcular o intervalo corretamente, pois muitas vezes a NF é emitida ou lançada antes da chegada física.",
+        "justificativa": "A consulta retornou nulo porque o filtro restritivo de data evitou encontrar os pares de recebimento e fatura, gerando um resultado vazio inverossímil para a regra de negócio.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1431
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Qual é o tempo médio gasto na etapa de recebimento e conferência de materiais?",
+      "tabelas": [
+        "stock_picking",
+        "stock_move",
+        "stock_picking_type",
+        "res_partner",
+        "product_product",
+        "product_template",
+        "purchase_order_line"
+      ],
+      "sql": "SELECT AVG(sp.date_done - sp.create_date) AS tempo_medio_recebimento FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON spt.id = sp.picking_type_id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND sp.create_date IS NOT NULL LIMIT 200",
+      "resposta": "O tempo médio gasto na etapa de recebimento e conferência de materiais concluídos é de aproximadamente 1 minuto e 21 segundos.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "tempo_medio_recebimento": "0:01:21.371567"
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2313,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta calculou corretamente o lead time de recebimento conforme as regras de negócio (diferença entre date_done e create_date para pickings incoming com state='done') e a resposta interpretou o resultado com precisão e clareza.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 967
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Qual a média de tempo que levamos para processar um recebimento completo?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "stock_move",
+        "res_partner"
+      ],
+      "sql": "SELECT AVG(sp.date_done - sp.create_date) AS media_tempo_processamento, COUNT(sp.id) AS total_recebimentos_concluidos FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON spt.id = sp.picking_type_id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND sp.create_date IS NOT NULL LIMIT 200",
+      "resposta": "Com base nos dados obtidos, a média de tempo para processar um recebimento completo (concluído) é de aproximadamente 1 minuto e 21 segundos, considerando um total de 5 recebimentos concluídos.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "media_tempo_processamento": "0:01:21.371567",
+          "total_recebimentos_concluidos": 5
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2584,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "O SQL aplicou corretamente a regra de lead time (diferença entre date_done e create_date para recebimentos 'incoming' com state='done') e a resposta interpretou os dados com precisão e clareza.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 787
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Qual o tempo médio de atravessamento entre a chegada na doca e a efetivação no estoque?",
+      "tabelas": [
+        "stock_picking",
+        "stock_picking_type",
+        "stock_move",
+        "res_partner"
+      ],
+      "sql": "SELECT AVG(sp.date_done - sp.create_date) AS tempo_medio_atravessamento, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY (sp.date_done - sp.create_date)) AS mediana_atravessamento, COUNT(sp.id) AS total_recebimentos_concluidos FROM stock_picking AS sp JOIN stock_picking_type AS spt ON spt.id = sp.picking_type_id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND sp.create_date IS NOT NULL LIMIT 200",
+      "resposta": "Com base nos dados obtidos:\n\n* **Tempo médio de atravessamento:** Aproximadamente 1 minuto e 21 segundos (00:01:21).\n* **Mediana do atravessamento:** Aproximadamente 1 minuto e 5 segundos (00:01:05).\n* **Total de recebimentos concluídos:** 5.",
+      "linhas": 1,
+      "linhas_amostra": [
+        {
+          "tempo_medio_atravessamento": "0:01:21.371567",
+          "mediana_atravessamento": "0:01:05.563365",
+          "total_recebimentos_concluidos": 5
+        }
+      ],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2577,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": null,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A pergunta foi respondida de forma clara e objetiva utilizando exatamente os dados retornados pela consulta SQL, que por sua vez seguiu perfeitamente a regra de negócio de lead time de recebimento para operações incoming concluídas.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1116
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais compras atrasadas têm risco de prejudicar o andamento das OPs?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "mrp_production",
+        "stock_move",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, po.date_planned AS data_prevista, mrp.name AS ordem_producao, mrp.state AS status_op FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id JOIN purchase_order_line AS pol ON pol.order_id = po.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id JOIN stock_move AS sm ON sm.purchase_line_id = pol.id JOIN mrp_production AS mrp ON sm.raw_material_production_id = mrp.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') AND po.date_planned < (CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AND mrp.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') AND pol.display_type IS NULL ORDER BY po.date_planned ASC, rp.name ASC LIMIT 200",
+      "resposta": "Nenhum resultado foi encontrado. O critério buscado foi: compras atrasadas (com data prevista anterior a hoje, com status confirmado/concluído e recebimento pendente ou parcial) que possuem itens vinculados a Ordens de Produção ativas e cujos materiais ainda não estão reservados, concluídos ou cancelados.",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3249,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta está perfeitamente alinhada com as regras de negócio para identificar compras atrasadas com risco de impactar ordens de produção, e o resultado vazio reflete legitimamente a ausência de registros que atendam simultaneamente a todos os critérios restritivos no banco de dados.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1042
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Tem alguma ordem de produção ameaçada por falta de entrega de algum pedido?",
+      "tabelas": [
+        "mrp_production",
+        "stock_move",
+        "purchase_order_line",
+        "purchase_order",
+        "product_product",
+        "product_template",
+        "stock_picking",
+        "uom_uom",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel"
+      ],
+      "sql": "SELECT op.name AS ordem_producao, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto_op, op.state AS status_op, sm.state AS status_componente, COALESCE(pt_comp.name ->> 'pt_BR', pt_comp.name ->> 'en_US') AS componente_faltante, sm.product_uom_qty AS quantidade_necessaria, po.name AS pedido_compra_relacionado, rp.name AS fornecedor, pol.date_planned AS data_prevista_entrega_pedido, (pol.product_qty - pol.qty_received) AS quantidade_pendente_compra FROM public.mrp_production AS op JOIN public.product_product AS pp ON op.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id JOIN public.stock_move AS sm ON sm.raw_material_production_id = op.id JOIN public.product_product AS pp_comp ON sm.product_id = pp_comp.id JOIN public.product_template AS pt_comp ON pp_comp.product_tmpl_id = pt_comp.id LEFT JOIN public.purchase_order_line AS pol ON pol.product_id = sm.product_id AND pol.display_type IS NULL AND (pol.product_qty - pol.qty_received) > 0 LEFT JOIN public.purchase_order AS po ON pol.order_id = po.id AND po.state IN ('purchase', 'done') LEFT JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE op.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') ORDER BY op.date_start ASC, op.name ASC, pol.date_planned ASC LIMIT 200",
+      "resposta": "Não há ordens de produção ameaçadas no momento, pois o resultado está vazio (nenhum componente necessário para ordens em andamento está pendente de entrega por pedidos de compra).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3395,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 4.5,
+        "notas": {
+          "fidelidade": 4,
+          "aderencia": 5,
+          "sql": 4,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta executou corretamente seguindo as regras de negócio para OPs em risco e cruzamento com compras, retornando zero linhas de forma plausível.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 948
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Quais pedidos em aberto podem acabar gerando falta de material na fábrica?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "product_product",
+        "product_template",
+        "stock_move",
+        "mrp_production",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, pol.date_planned AS data_prevista, mrp.name AS ordem_producao, mrp.state AS status_op FROM purchase_order_line AS pol JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id JOIN stock_move AS sm ON sm.product_id = pp.id AND sm.raw_material_production_id IS NOT NULL JOIN mrp_production AS mrp ON sm.raw_material_production_id = mrp.id WHERE po.state IN ('purchase', 'done') AND pol.display_type IS NULL AND (pol.product_qty - pol.qty_received) > 0 AND pol.date_planned < CURRENT_DATE AND mrp.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') ORDER BY pol.date_planned ASC, rp.name ASC, po.name ASC LIMIT 200",
+      "resposta": "Nenhum pedido em aberto foi encontrado com saldo a receber que esteja com a data prevista vencida e vinculado a ordens de produção ativas com falta de material.",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2910,
+      "validacao": {
+        "veredito": "parcial",
+        "nota_media": 4.5,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 3,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [
+          "O join entre stock_move e product_id sem vincular com purchase_order_line pode trazer movimentos de outras ordens de compra para o mesmo produto, gerando inconsistencias logicas no cruzamento."
+        ],
+        "sugestao": "Vincular o stock_move de materia-prima com o produto ou verificar a necessidade real do join com stock_move se a regra de falta já é garantida pelo saldo pendente do pedido (pol.product_qty - pol.qty_received > 0).",
+        "justificativa": "A resposta é fiel aos dados retornados vazios e a consulta é coerente com a pergunta, embora o SQL utilize um cruzamento complexo com stock_move que pode ser refinado.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1309
+      }
+    },
+    {
+      "grupo": "analitica",
+      "numero_sorteado": null,
+      "pergunta": "Existem pedidos não recebidos que vão causar parada por falta de insumo nas ordens de produção?",
+      "tabelas": [
+        "purchase_order",
+        "purchase_order_line",
+        "stock_move",
+        "mrp_production",
+        "product_product",
+        "product_template",
+        "res_partner",
+        "purchase_order_stock_picking_rel",
+        "account_move_purchase_order_rel",
+        "uom_uom",
+        "stock_picking"
+      ],
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pol.product_qty - pol.qty_received AS quantidade_pendente, pol.date_planned AS data_prevista_entrega, mrp.name AS ordem_producao, mrp.state AS status_op FROM purchase_order_line AS pol JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id JOIN stock_move AS sm ON sm.purchase_line_id = pol.id JOIN mrp_production AS mrp ON sm.raw_material_production_id = mrp.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty AND mrp.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') ORDER BY pol.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Não existem pedidos não recebidos que vão causar parada por falta de insumo nas ordens de produção (nenhum pedido com saldo a receber vinculado a ordens de produção ativas).",
+      "linhas": 0,
+      "linhas_amostra": [],
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2882,
+      "validacao": {
+        "veredito": "aprovada",
+        "nota_media": 5.0,
+        "notas": {
+          "fidelidade": 5,
+          "aderencia": 5,
+          "sql": 5,
+          "clareza": 5
+        },
+        "resultado_vazio_plausivel": true,
+        "problemas": [],
+        "sugestao": "",
+        "justificativa": "A consulta executou corretamente sem erros e retornou um resultado vazio coerente com a premissa de que não há registros cruzados para o cenário consultado, e a resposta final refletiu fielmente isso.",
+        "modelo_juiz": "gemini-3.5-flash-lite",
+        "tempo_ms": 1057
+      }
+    }
+  ]
+}

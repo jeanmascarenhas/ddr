@@ -1,0 +1,129 @@
+{
+  "executado_em": "2026-10-10T14:48:27",
+  "total_perguntas": 12,
+  "com_erro": 0,
+  "tempo_total_ms": 33355,
+  "concorrencia": 1,
+  "resultados": [
+    {
+      "grupo": "operacional",
+      "pergunta": "O pedido de compra P00001 já foi recebido?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, CASE WHEN NOT EXISTS(SELECT 1 FROM purchase_order_line AS pol WHERE pol.order_id = po.id AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty) THEN 'Sim' ELSE 'Nao' END AS totalmente_recebido FROM public.purchase_order AS po JOIN public.res_partner AS rp ON rp.id = po.partner_id WHERE UPPER(po.name) = UPPER('P00001') LIMIT 200",
+      "resposta": "Sim, o pedido de compra P00001 já foi recebido. O status do pedido é confirmado, o status de recebimento é total ('full') e ele está totalmente recebido.",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 4426
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual o status da NF P00002?",
+      "sql": "SELECT am.name AS numero_documento, am.ref AS referencia_fornecedor, rp.name AS fornecedor, am.move_type AS tipo_movimento, am.state AS status, am.payment_state AS status_pagamento, am.invoice_date AS data_fatura, am.invoice_date_due AS data_vencimento, am.amount_total AS valor_total, am.amount_residual AS valor_residual FROM public.account_move AS am JOIN public.res_partner AS rp ON am.partner_id = rp.id WHERE UPPER(am.ref) = UPPER('P00002') OR UPPER(am.name) = UPPER('P00002') LIMIT 200",
+      "resposta": "Documento não encontrado. O resultado da consulta para a NF P00002 está vazio.",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2525
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual fornecedor enviou a NF P00003?",
+      "sql": "SELECT rp.name AS fornecedor FROM public.account_move AS am JOIN public.res_partner AS rp ON am.partner_id = rp.id WHERE am.move_type = 'in_invoice' AND (UPPER(am.ref) = UPPER('P00003') OR UPPER(am.name) = UPPER('P00003')) LIMIT 200",
+      "resposta": "Documento não encontrado.",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2312
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual a quantidade recebida do material P00001?",
+      "sql": "SELECT COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS sku, SUM(sm.quantity) AS quantidade_recebida FROM public.stock_move AS sm JOIN public.stock_picking AS sp ON sm.picking_id = sp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE sm.state = 'done' AND (UPPER(pp.default_code) = UPPER('P00001') OR UPPER(pt.default_code) = UPPER('P00001')) GROUP BY COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US'), pp.default_code LIMIT 200",
+      "resposta": "Não foram encontrados registros (o resultado está vazio) para a quantidade recebida do material P00001.",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2685
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais NFs estão aguardando conferência?",
+      "sql": "SELECT am.name AS numero_documento, am.ref AS referencia_nf, rp.name AS fornecedor, am.invoice_date AS data_nf, am.invoice_date_due AS data_vencimento, am.amount_total AS valor_total, am.amount_residual AS valor_residual, am.payment_state AS status_pagamento FROM public.account_move AS am JOIN public.res_partner AS rp ON am.partner_id = rp.id WHERE am.move_type = 'in_invoice' AND am.state = 'draft' ORDER BY am.invoice_date DESC, am.name LIMIT 200",
+      "resposta": "Nenhuma nota fiscal foi encontrada aguardando conferência (o resultado está vazio).",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2499
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais pedidos de compra possuem recebimento pendente?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.date_order AS data_pedido, po.date_planned AS data_prevista FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id JOIN public.purchase_order_line AS pol ON pol.order_id = po.id WHERE po.state IN ('purchase', 'done') AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty GROUP BY po.id, po.name, rp.name, po.state, po.date_order, po.date_planned ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Nenhum pedido de compra possui recebimento pendente (o resultado da consulta está vazio).",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2493
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais entregas estão programadas para hoje?",
+      "sql": "SELECT sp.name AS numero_documento, rp.name AS fornecedor, sp.origin AS origem, sp.state AS status, (sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS data_agendada FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON sp.picking_type_id = spt.id LEFT JOIN public.res_partner AS rp ON sp.partner_id = rp.id WHERE spt.code = 'incoming' AND NOT sp.state IN ('done', 'cancel') AND CAST((sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY sp.scheduled_date ASC, sp.name ASC LIMIT 200",
+      "resposta": "Não há entregas programadas para hoje (nenhum registro pendente encontrado).",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2695
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais materiais tiveram divergência durante o recebimento?",
+      "sql": "SELECT sp.name AS numero_recebimento, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, sm.product_uom_qty AS quantidade_planejada, sm.quantity AS quantidade_realizada, sp.date_done AS data_conclusao FROM stock_picking AS sp JOIN stock_picking_type AS spt ON sp.picking_type_id = spt.id JOIN res_partner AS rp ON sp.partner_id = rp.id JOIN stock_move AS sm ON sm.picking_id = sp.id JOIN product_product AS pp ON sm.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id WHERE spt.code = 'incoming' AND (sp.backorder_id IS NOT NULL OR (sm.state = 'done' AND sm.quantity < sm.product_uom_qty)) ORDER BY sp.date_done DESC NULLS LAST LIMIT 200",
+      "resposta": "Nenhum material apresentou divergência durante o recebimento (o resultado da consulta está vazio).",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2551
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais materiais críticos estão pendentes de recebimento e podem impactar a produção?",
+      "sql": "SELECT pt_comp.default_code AS sku, COALESCE(pt_comp.name ->> 'pt_BR', pt_comp.name ->> 'en_US') AS produto, mp.name AS ordem_producao, sm.product_uom_qty AS quantidade_necessaria, po.name AS pedido_compra, rp.name AS fornecedor, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, pol.date_planned AS data_prevista_entrega FROM public.stock_move AS sm JOIN public.mrp_production AS mp ON sm.raw_material_production_id = mp.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt_comp ON pp.product_tmpl_id = pt_comp.id JOIN public.purchase_order_line AS pol ON pol.product_id = sm.product_id JOIN public.purchase_order AS po ON pol.order_id = po.id JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE sm.raw_material_production_id IS NOT NULL AND NOT sm.state IN ('assigned', 'done', 'cancel') AND mp.state IN ('confirmed', 'progress', 'to_close') AND po.state IN ('purchase', 'done') AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty ORDER BY pol.date_planned ASC, pt_comp.default_code ASC LIMIT 200",
+      "resposta": "Nenhum material crítico pendente de recebimento foi encontrado com impacto na produção (o resultado da consulta está vazio).",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2847
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais fornecedores apresentam maior índice de atraso nas entregas?",
+      "sql": "SELECT rp.name AS fornecedor, rp.vat AS cnpj, COUNT(pol.id) AS total_linhas_pedido, SUM(CASE WHEN (pol.qty_received < pol.product_qty AND pol.date_planned < CURRENT_TIMESTAMP) THEN 1 ELSE 0 END) AS total_linhas_atrasadas, ROUND(CAST(SUM(CASE WHEN (pol.qty_received < pol.product_qty AND pol.date_planned < CURRENT_TIMESTAMP) THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(pol.id), 0) * 100 AS DECIMAL), 2) AS indice_atraso_percentual FROM public.purchase_order_line AS pol JOIN public.purchase_order AS po ON po.id = pol.order_id JOIN public.res_partner AS rp ON rp.id = po.partner_id WHERE po.state IN ('purchase', 'done') AND pol.display_type IS NULL GROUP BY rp.id, rp.name, rp.vat HAVING COUNT(pol.id) > 0 ORDER BY indice_atraso_percentual DESC, total_linhas_atrasadas DESC LIMIT 50",
+      "resposta": "Com base nos dados fornecidos, o único fornecedor listado é a **JJMM ENTERPRISES L.L.C.** (CNPJ: `dd2e23216641d3as`), que apresenta um total de 9 linhas de pedido, sendo **0** linhas atrasadas e um **índice de atraso de 0,00%**.",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2868
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Qual o lead time médio entre a chegada do material e a conclusão do recebimento?",
+      "sql": "SELECT AVG(EXTRACT(EPOCH FROM (sp.date_done - sp.create_date)) / 3600) AS lead_time_medio_horas, AVG(EXTRACT(EPOCH FROM (sp.date_done - sp.create_date)) / 86400) AS lead_time_medio_dias FROM stock_picking AS sp JOIN stock_picking_type AS spt ON spt.id = sp.picking_type_id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND sp.create_date IS NOT NULL LIMIT 200",
+      "resposta": "O lead time médio entre a chegada do material e a conclusão do recebimento é de aproximadamente **0,02 horas** (ou **0,0009 dias**), considerando os recebimentos concluídos.",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2480
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais pedidos possuem risco de impactar ordens de produção devido à falta de material?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pol.product_qty - pol.qty_received AS quantidade_pendente, mp.name AS numero_op, mp.state AS status_op FROM purchase_order AS po JOIN res_partner AS rp ON po.partner_id = rp.id JOIN purchase_order_line AS pol ON pol.order_id = po.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id JOIN stock_move AS sm ON sm.product_id = pp.id JOIN mrp_production AS mp ON sm.raw_material_production_id = mp.id WHERE po.state IN ('purchase', 'done') AND pol.display_type IS NULL AND pol.qty_received < pol.product_qty AND NOT sm.state IN ('assigned', 'done', 'cancel') AND mp.state IN ('confirmed', 'progress', 'to_close') ORDER BY po.date_order DESC, mp.date_start ASC LIMIT 200",
+      "resposta": "Não há pedidos com risco de impactar ordens de produção devido à falta de material (o resultado da consulta está vazio).",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2965
+    }
+  ]
+}

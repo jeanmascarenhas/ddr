@@ -1,0 +1,129 @@
+{
+  "executado_em": "2026-10-10T15:18:57",
+  "total_perguntas": 12,
+  "com_erro": 12,
+  "tempo_total_ms": 1034,
+  "concorrencia": 5,
+  "resultados": [
+    {
+      "grupo": "operacional",
+      "pergunta": "O pedido de compra P00002 já foi recebido?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 1001
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual o status da NF P00002?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 988
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual fornecedor enviou a NF P00002?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 973
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual a quantidade recebida do material P00002?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 951
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais NFs estão aguardando conferência?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 1002
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais pedidos de compra possuem recebimento pendente?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 24
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais entregas estão programadas para hoje?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 23
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais materiais tiveram divergência durante o recebimento?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 22
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais materiais críticos estão pendentes de recebimento e podem impactar a produção?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 24
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais fornecedores apresentam maior índice de atraso nas entregas?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 21
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Qual o lead time médio entre a chegada do material e a conclusão do recebimento?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 12
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais pedidos possuem risco de impactar ordens de produção devido à falta de material?",
+      "sql": null,
+      "resposta": "",
+      "linhas": 0,
+      "tentativas": 0,
+      "erro": "Falha no agente: name 'TERM_GLOSSARY' is not defined",
+      "tempo_ms": 9
+    }
+  ]
+}

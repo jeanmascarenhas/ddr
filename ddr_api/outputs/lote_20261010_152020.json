@@ -1,0 +1,129 @@
+{
+  "executado_em": "2026-10-10T15:20:20",
+  "total_perguntas": 12,
+  "com_erro": 0,
+  "tempo_total_ms": 16239,
+  "concorrencia": 5,
+  "resultados": [
+    {
+      "grupo": "operacional",
+      "pergunta": "O pedido de compra P00002 já foi recebido?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.date_planned AS data_prevista, po.effective_date AS data_recebimento_efetivo, po.invoice_count AS qtd_faturas FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00002') LIMIT 200",
+      "resposta": "Sim, o pedido de compra P00002 já foi recebido. O status de recebimento consta como total (`full`) e a data de recebimento efetivo foi em 26/09/2026 às 11:22:29.",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 8078
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual o status da NF P00002?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.invoice_count AS qtd_faturas, am.name AS numero_fatura, am.ref AS referencia_fornecedor, am.state AS status_fatura, am.payment_state AS status_pagamento FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id LEFT JOIN public.account_move_purchase_order_rel AS ampor ON ampor.purchase_order_id = po.id LEFT JOIN public.account_move AS am ON am.id = ampor.account_move_id AND am.move_type = 'in_invoice' AND am.state <> 'cancel' WHERE UPPER(po.name) = UPPER('P00002') LIMIT 200",
+      "resposta": "O pedido P00002 está confirmado (`purchase`), com recebimento total (`full`) e status de faturamento como \"para faturar\" (`to invoice`). Atualmente, não há faturas vinculadas a este pedido (`qtd_faturas`: 0).",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 8577
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual fornecedor enviou a NF P00002?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.invoice_status AS status_faturamento, po.receipt_status AS status_recebimento, po.date_order AS data_pedido FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE UPPER(po.name) = UPPER('P00002') LIMIT 200",
+      "resposta": "O fornecedor que enviou o pedido P00002 é a **JJMM ENTERPRISES L.L.C.** (com status de pedido confirmado).",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 7367
+    },
+    {
+      "grupo": "operacional",
+      "pergunta": "Qual a quantidade recebida do material P00002?",
+      "sql": "SELECT po.name AS numero_pedido, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS nome_produto, pp.default_code AS sku, SUM(pol.product_qty) AS quantidade_pedida, SUM(pol.qty_received) AS quantidade_recebida, SUM(pol.product_qty - pol.qty_received) AS quantidade_pendente FROM public.purchase_order AS po JOIN public.purchase_order_line AS pol ON pol.order_id = po.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE UPPER(po.name) = UPPER('P00002') AND pol.display_type IS NULL GROUP BY po.name, pt.name, pp.default_code ORDER BY nome_produto LIMIT 200",
+      "resposta": "A quantidade recebida para os itens do pedido P00002 é:\n\n* **Alto-falante 3W 4Ohm - Corsair** (SKU: ALT-10112): 10,00 unidades\n* **Alto-falante Buzzer 5V - Corsair** (SKU: ALT-13550): 10,00 unidades",
+      "linhas": 2,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 8005
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais NFs estão aguardando conferência?",
+      "sql": "SELECT COALESCE(am.name, am.ref, po.name) AS numero_documento, rp.name AS fornecedor, CASE WHEN am.state = 'draft' THEN 'Fatura em Rascunho' WHEN po.invoice_status = 'to invoice' AND po.receipt_status = 'full' THEN 'Aguardando NF (Recebido)' ELSE 'Aguardando Conferência' END AS status_conferencia, COALESCE(am.invoice_date, CAST(po.date_order AS DATE)) AS data_documento, am.amount_total AS valor_total FROM public.account_move AS am JOIN public.res_partner AS rp ON rp.id = am.partner_id JOIN public.account_move_purchase_order_rel AS ampor ON ampor.account_move_id = am.id JOIN public.purchase_order AS po ON po.id = ampor.purchase_order_id WHERE am.state = 'draft' AND am.move_type = 'in_invoice' UNION SELECT po.name AS numero_documento, rp.name AS fornecedor, 'Aguardando NF (Recebido)' AS status_conferencia, CAST(po.date_order AS DATE) AS data_documento, po.amount_total AS valor_total FROM public.purchase_order AS po JOIN public.res_partner AS rp ON rp.id = po.partner_id WHERE po.state IN ('purchase', 'done') AND po.invoice_status = 'to invoice' ORDER BY data_documento DESC NULLS LAST, fornecedor LIMIT 200",
+      "resposta": "Com base nos dados encontrados, há 4 documentos aguardando conferência/NF:\n\n1. **Pedido P00007**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Aguardando NF (Recebido)\n   * **Data:** 10/10/2026\n   * **Valor Total:** R$ 128.221,55\n\n2. **Pedido P00003**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Aguardando NF (Recebido)\n   * **Data:** 10/10/2026\n   * **Valor Total:** R$ 128.221,55\n\n3. **Pedido P00002**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Aguardando NF (Recebido)\n   * **Data:** 26/09/2026\n   * **Valor Total:** R$ 222,53\n\n4. **Pedido P00001**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status:** Aguardando NF (Recebido)\n   * **Data:** 09/09/2026\n   * **Valor Total:** R$ 1.976,85",
+      "linhas": 4,
+      "tentativas": 2,
+      "erro": null,
+      "tempo_ms": 10645
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais pedidos de compra possuem recebimento pendente?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, po.state AS status_pedido, po.receipt_status AS status_recebimento, po.invoice_status AS status_faturamento, po.date_planned AS data_prevista FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') ORDER BY po.date_planned ASC, po.name ASC LIMIT 200",
+      "resposta": "Com base nos dados, os pedidos de compra com recebimento pendente ou parcial são:\n\n1. **Pedido P00007**\n   * **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   * **Status do Pedido:** Confirmado\n   * **Status de Recebimento:** Parcial\n   * **Data Prevista:** 10/10/2026\n\n2. **Pedido P00004**\n   * **Fornecedor:** Fornecedor-teste\n   * **Status do Pedido:** Confirmado\n   * **Status de Recebimento:** Pendente\n   * **Data Prevista:** 17/10/2026\n\n3. **Pedido P00005**\n   * **Fornecedor:** ABB-teste\n   * **Status do Pedido:** Confirmado\n   * **Status de Recebimento:** Pendente\n   * **Data Prevista:** 17/10/2026",
+      "linhas": 3,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3521
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais entregas estão programadas para hoje?",
+      "sql": "SELECT sp.name AS numero_recebimento, rp.name AS fornecedor, spt.code AS tipo_operacao, sp.state AS status, sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo' AS data_programada, CASE WHEN sp.state = 'done' THEN 'Concluido' ELSE 'Pendente' END AS status_entrega FROM stock_picking AS sp JOIN stock_picking_type AS spt ON spt.id = sp.picking_type_id LEFT JOIN res_partner AS rp ON rp.id = sp.partner_id WHERE spt.code = 'incoming' AND sp.state <> 'cancel' AND CAST((sp.scheduled_date AT TIME ZONE 'UTC' AT TIME ZONE 'America/Sao_Paulo') AS DATE) = CAST((CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo') AS DATE) ORDER BY sp.scheduled_date ASC LIMIT 200",
+      "resposta": "Aqui estão as entregas programadas para hoje:\n\n1. **WH/IN/00004**\n   - **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   - **Data Programada:** 10/10/2026 às 14:09\n   - **Status:** Concluído\n\n2. **WH/IN/00008**\n   - **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   - **Data Programada:** 10/10/2026 às 15:10\n   - **Status:** Pronto para receber (Pendente)\n\n3. **WH/IN/00007**\n   - **Fornecedor:** JJMM ENTERPRISES L.L.C.\n   - **Data Programada:** 10/10/2026 às 15:10\n   - **Status:** Concluído",
+      "linhas": 3,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3423
+    },
+    {
+      "grupo": "acompanhamento",
+      "pergunta": "Quais materiais tiveram divergência durante o recebimento?",
+      "sql": "SELECT po.name AS numero_pedido, pt.default_code AS codigo_produto, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, sp.name AS numero_recebimento, sp.state AS status_recebimento, CASE WHEN sp.backorder_id IS NOT NULL THEN 'Recebimento parcial com backorder' WHEN pol.qty_received < pol.product_qty THEN 'Quantidade recebida menor que a pedida' ELSE 'Outra divergencia' END AS tipo_divergencia FROM public.stock_move AS sm JOIN public.stock_picking AS sp ON sm.picking_id = sp.id JOIN public.purchase_order_line AS pol ON sm.purchase_line_id = pol.id JOIN public.purchase_order AS po ON pol.order_id = po.id JOIN public.product_product AS pp ON pol.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id WHERE pol.display_type IS NULL AND (sp.backorder_id IS NOT NULL OR pol.qty_received < pol.product_qty) ORDER BY po.name, pt.default_code LIMIT 200",
+      "resposta": "Com base nos dados fornecidos, os seguintes materiais apresentaram divergência durante o recebimento:\n\n1. **Pedido P00004** (Recebimento `WH/IN/00005`, Status: *pronto para receber*)\n   - **CAP-10104** (Capacitor 10uF - AMD): Pedido de 600, recevido 0, pendente 600 (*Quantidade recebida menor que a pedida*).\n   - **CAP-10422** (Capacitor Electrolytic - AMD): Pedido de 5, recebido 0, pendente 5 (*Quantidade recebida menor que a pedida*).\n   - **RES-10361** (Resistor 1k Ohm - Generic): Pedido de 600, recebido 0, pendente 600 (*Quantidade recebida menor que a pedida*).\n\n2. **Pedido P00005** (Recebimento `WH/IN/00006`, Status: *pronto para receber*)\n   - **MOU-10566** (Mouse Optical USB - Intel): Pedido de 500, recebido 0, pendente 500 (*Quantidade recebida menor que a pedida*).\n   - **RES-10152** (Resistor 10k Ohm - Wurth): Pedido de 500, recebido 0, pendente 500 (*Quantidade recebida menor que a pedida*).\n   - **RES-10353** (Resistor 1M Ohm - Generic): Pedido de 500, recebido 0, pendente 500 (*Quantidade recebida menor que a pedida*).\n   - **TEC-10134** (Teclado Mechanical Blue - Murata): Pedido de 500, recebido 0, pendente 500 (*Quantidade recebida menor que a pedida*).\n\n3. **Pedido P00007** (Recebimentos `WH/IN/00007` - *concluído* e `WH/IN/00008` - *pronto para receber*)\n   - **CAP-27832** (Capacitor Tantalum - Wurth): Pedido de 500, recebido 30, pendente 470 (*Quantidade recebida menor que a pedida* / *Recebimento parcial com backorder*).\n   - **MEM-10326** (Memoria RAM DDR5 32GB - Nvidia): Pedido de 100, recebido 50, pendente 50 (*Quantidade recebida menor que a pedida* / *Recebimento parcial com backorder*).\n   - **RES-10317** (Resistor 100k Ohm - Intel): Pedido de 1500, recebido 600, pendente 900 (*Quantidade recebida menor que a pedida* / *Recebimento parcial com backorder*).",
+      "linhas": 13,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 4857
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais materiais críticos estão pendentes de recebimento e podem impactar a produção?",
+      "sql": "SELECT COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pp.default_code AS codigo_interno, m.name AS ordem_producao, m.state AS status_op, sm.product_uom_qty AS quantidade_necessaria, po.name AS pedido_compra, rp.name AS fornecedor, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, pol.date_planned AS data_prevista_entrega FROM public.stock_move AS sm JOIN public.mrp_production AS m ON sm.raw_material_production_id = m.id JOIN public.product_product AS pp ON sm.product_id = pp.id JOIN public.product_template AS pt ON pp.product_tmpl_id = pt.id LEFT JOIN public.purchase_order_line AS pol ON pol.product_id = sm.product_id AND pol.display_type IS NULL LEFT JOIN public.purchase_order AS po ON pol.order_id = po.id AND po.state IN ('purchase', 'done') AND po.receipt_status IN ('pending', 'partial') LEFT JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE m.state IN ('confirmed', 'progress', 'to_close') AND NOT sm.state IN ('assigned', 'done', 'cancel') AND pp.active = TRUE ORDER BY m.date_start ASC, pt.name ->> 'pt_BR' ASC LIMIT 200",
+      "resposta": "Nenhum material crítico pendente de recebimento foi encontrado para ordens de produção em andamento ou confirmadas.",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3520
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais fornecedores apresentam maior índice de atraso nas entregas?",
+      "sql": "SELECT rp.name AS fornecedor, rp.vat AS cnpj_cpf, COUNT(po.id) AS total_pedidos_ativos, SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < (CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AND po.receipt_status IN ('pending', 'partial')) THEN 1 ELSE 0 END) AS pedidos_atrasados, ROUND((CAST(SUM(CASE WHEN (po.effective_date > po.date_planned) OR (po.effective_date IS NULL AND po.date_planned < (CURRENT_TIMESTAMP AT TIME ZONE 'UTC') AND po.receipt_status IN ('pending', 'partial')) THEN 1 ELSE 0 END) AS DECIMAL) / COUNT(po.id)) * 100, 2) AS indice_atraso_percentual FROM public.purchase_order AS po JOIN public.res_partner AS rp ON po.partner_id = rp.id WHERE po.state IN ('purchase', 'done') GROUP BY rp.id, rp.name, rp.vat HAVING COUNT(po.id) > 0 ORDER BY indice_atraso_percentual DESC, total_pedidos_ativos DESC LIMIT 20",
+      "resposta": "Com base nos dados obtidos, o fornecedor que apresenta o maior índice de atraso nas entregas é a **JJMM ENTERPRISES L.L.C.** (CNPJ/CPF: `dd2e23216641d3as`), com **100% de índice de atraso** (4 pedidos atrasados em um total de 4 pedidos confirmados/concluídos).\n\nOs demais fornecedores listados (**ABB-teste** e **Fornecedor-teste**) apresentam 0% de índice de atraso, com 1 pedido cada e nenhum atraso registrado.",
+      "linhas": 3,
+      "tentativas": 2,
+      "erro": null,
+      "tempo_ms": 5558
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Qual o lead time médio entre a chegada do material e a conclusão do recebimento?",
+      "sql": "SELECT AVG(sp.date_done - sp.create_date) AS lead_time_medio, MIN(sp.date_done - sp.create_date) AS menor_lead_time, MAX(sp.date_done - sp.create_date) AS maior_lead_time FROM public.stock_picking AS sp JOIN public.stock_picking_type AS spt ON spt.id = sp.picking_type_id WHERE spt.code = 'incoming' AND sp.state = 'done' AND sp.date_done IS NOT NULL AND sp.create_date IS NOT NULL LIMIT 200",
+      "resposta": "O lead time médio entre a chegada do material e a conclusão do recebimento (status concluído) é de aproximadamente 1 minuto e 21 segundos. O menor tempo registrado foi de praticamente 0 segundos e o maior foi de 3 minutos e 48 segundos.",
+      "linhas": 1,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 2749
+    },
+    {
+      "grupo": "analitica",
+      "pergunta": "Quais pedidos possuem risco de impactar ordens de produção devido à falta de material?",
+      "sql": "SELECT po.name AS numero_pedido, rp.name AS fornecedor, pt.default_code AS sku, COALESCE(pt.name ->> 'pt_BR', pt.name ->> 'en_US') AS produto, pol.product_qty AS quantidade_pedida, pol.qty_received AS quantidade_recebida, (pol.product_qty - pol.qty_received) AS quantidade_pendente, mrp.name AS ordem_producao, mrp.state AS status_op FROM purchase_order_line AS pol JOIN purchase_order AS po ON pol.order_id = po.id JOIN res_partner AS rp ON po.partner_id = rp.id JOIN product_product AS pp ON pol.product_id = pp.id JOIN product_template AS pt ON pp.product_tmpl_id = pt.id JOIN stock_move AS sm_comp ON sm_comp.product_id = pp.id JOIN mrp_production AS mrp ON sm_comp.raw_material_production_id = mrp.id WHERE pol.display_type IS NULL AND po.state IN ('purchase', 'done') AND pol.qty_received < pol.product_qty AND mrp.state IN ('confirmed', 'progress', 'to_close') AND NOT sm_comp.state IN ('assigned', 'done', 'cancel') GROUP BY po.name, rp.name, pt.default_code, pt.name, pol.product_qty, pol.qty_received, mrp.name, mrp.state ORDER BY po.name, mrp.name LIMIT 200",
+      "resposta": "Nenhum pedido com risco de impactar ordens de produção devido à falta de material foi encontrado.",
+      "linhas": 0,
+      "tentativas": 1,
+      "erro": null,
+      "tempo_ms": 3718
+    }
+  ]
+}
